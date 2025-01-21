@@ -1,0 +1,93 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import addBranch from "../components/addBranch";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { CirclePlus } from "lucide-react";
+function AddBranchModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [brnahceName, setBrnahceName] = useState("");
+
+  const handleAddBranch = async () => {
+    setLoading(true);
+    if (brnahceName) {
+      await addBranch(brnahceName);
+      setBrnahceName("");
+      setIsOpen(false);
+      setLoading(false);
+      toast.success("Yangi filial qo'shildi");
+    } else {
+      toast.error("Iltimos filial nomini kiriting");
+    }
+  };
+
+  return (
+    <Dialog open={isOpen}>
+      <DialogTrigger asChild>
+        <Button onClick={() => setIsOpen(true)}>
+          <CirclePlus />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add new branche</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              value={brnahceName}
+              onChange={(e) => setBrnahceName(e.target.value)}
+              id="name"
+              className="col-span-3"
+              placeholder="Enter branch name"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button
+            disabled={loading}
+            onClick={handleAddBranch}
+            className="felx items-center justify-center"
+          >
+            {loading ? (
+              <div className="loader">
+                <div className="bar1"></div>
+                <div className="bar2"></div>
+                <div className="bar3"></div>
+                <div className="bar4"></div>
+                <div className="bar5"></div>
+                <div className="bar6"></div>
+                <div className="bar7"></div>
+                <div className="bar8"></div>
+                <div className="bar9"></div>
+                <div className="bar10"></div>
+                <div className="bar11"></div>
+                <div className="bar12"></div>
+              </div>
+            ) : (
+              <>Add</>
+            )}
+          </Button>
+          <Button variant="destructive" onClick={() => setIsOpen(false)}>Bekor qilish</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export default AddBranchModal;
