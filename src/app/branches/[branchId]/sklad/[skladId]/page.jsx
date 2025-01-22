@@ -7,11 +7,11 @@ import useCollection from "@/components/useCollection";
 
 import BranchRoomsID from "@/components/BranchRoomsID";
 
-const RoomDetails = () => {
+const SkladDetails = () => {
   const params = useParams();
-  const roomId = params.roomId;
+  const skladId = params.skladId;
   const branchId = params.branchId;
-  const currentRoom = useDocument("rooms", roomId);
+  const currentRoom = useDocument("wareHouses", skladId);
   const branch = useDocument("branches", branchId);
   return (
     <div className="p-5">
@@ -19,17 +19,17 @@ const RoomDetails = () => {
         <h1 className="font-bold text-2xl">{currentRoom?.name}</h1>
         <AddEquipmentDialog
           branchId={branchId}
-          roomId={roomId}
+          roomId={skladId}
           roomName={currentRoom?.name}
           branchName={branch?.name}
         />
       </div>
 
       <div>
-        <BranchRoomsID branchId={branchId} roomId={roomId} />
+        <BranchRoomsID branchId={branchId} roomId={skladId} />
       </div>
     </div>
   );
 };
 
-export default RoomDetails;
+export default SkladDetails;

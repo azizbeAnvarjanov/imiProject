@@ -18,6 +18,7 @@ import { db } from "../app/firebase";
 import { Label } from "./ui/label";
 import useCollection from "./useCollection";
 import toast from "react-hot-toast";
+import { CircleFadingPlus } from "lucide-react";
 
 const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
   const [loading, setLoading] = useState(false);
@@ -99,7 +100,7 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
 
   return (
     <Dialog open={isOpen}>
-      <Button onClick={() => setIsOpen(true)}>Add Equipment</Button>
+      <Button onClick={() => setIsOpen(true)}><CircleFadingPlus /></Button>
       <DialogContent>
         <DialogTitle>Add New Equipment</DialogTitle>
         <form>

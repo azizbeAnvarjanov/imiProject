@@ -36,7 +36,11 @@ const BranchSklads = ({ branchId }) => {
       <br />
       <ul className="flex gap-4">
         {wareHouses.map((wareHouse) => (
-          <Link href="#" className="border py-2 px-5 rounded-xl shadow-md" key={wareHouse.id}>
+          <Link
+            href={`/branches/${branchId}/sklad/${wareHouse.id}`}
+            className="border py-2 px-5 rounded-xl shadow-md"
+            key={wareHouse.id}
+          >
             {wareHouse.name}
           </Link>
         ))}
