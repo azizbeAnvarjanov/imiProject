@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
+"use client"
+import React from 'react'
+
 import Link from "next/link";
 import {
   Table,
@@ -14,45 +9,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import useCollection from '@/components/useCollection';
 
-import EditEquipmentDialog from "@/components/EditEquipmentDialog";
-import ChangeLocationDialog from "@/components/ChangeLocationDialog";
-
-const BranchRoomsID = ({ roomId, branchId }) => {
-  const [equipments, setEquipments] = useState([]);
-  const db = getFirestore(); // Initialize Firestore
-
-  useEffect(() => {
-    const q = query(
-      collection(db, "equipments"),
-      where("location", "==", roomId)
-    );
-
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const roomsData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setEquipments(roomsData);
-    });
-
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, [roomId, db]);
-
-  console.log(equipments);
-  
-
+const AllEquipments = () => {
+    const equipments = useCollection("equipments")
   return (
-    <div>
-      {equipments.length === 0 ? (
+    <div className='p-5 overflow-x-auto'>
+        {equipments.length === 0 ? (
         <>no equipments</>
       ) : (
-        <Table className="w-full border-collapse border border-gray-200 overflow-x-scroll min-w-[1000px]">
+        <Table className="w-[2000px] border-collapse border border-gray-200">
           <TableHeader>
             <TableRow>
               <TableCell className="bg-gray-500 text-white font-bold">
                 №
+              </TableCell>
+              <TableCell className="bg-gray-500 text-white font-bold">
+                Filial
+              </TableCell>
+              <TableCell className="bg-gray-500 text-white font-bold">
+                Xona
               </TableCell>
               <TableCell className="bg-gray-500 text-white font-bold">
                 Invertar raqami
@@ -79,6 +55,9 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                 O'lchov birligi
               </TableCell>
               <TableCell className="bg-gray-500 text-white font-bold">
+                Tag
+              </TableCell>
+              <TableCell className="bg-gray-500 text-white font-bold">
                 Sana
               </TableCell>
               <TableCell className="bg-gray-500 text-white font-bold">
@@ -89,9 +68,6 @@ const BranchRoomsID = ({ roomId, branchId }) => {
               </TableCell>
 
               <TableCell className="bg-gray-500 text-white font-bold">
-                Link
-              </TableCell>
-              <TableCell className="bg-gray-500 text-white font-bold">
                 Amallar
               </TableCell>
             </TableRow>
@@ -101,6 +77,13 @@ const BranchRoomsID = ({ roomId, branchId }) => {
               <TableRow key={user.id}>
                 <TableCell className="border p-2 text-center">
                   {index + 1}
+                </TableCell>
+
+                <TableCell className="border p-2">
+                  {user.branchName || "Ma'lumot yo'q"}
+                </TableCell>
+                <TableCell className="border p-2">
+                  {user.roomName || "Ma'lumot yo'q"}
                 </TableCell>
                 <TableCell className="border p-2">
                   {user.inventoryNumber || "Ma'lumot yo'q"}
@@ -127,6 +110,9 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                   {user.measure || "Ma'lumot yo'q"}
                 </TableCell>
                 <TableCell className="border p-2">
+                  {user.tag || "Ma'lumot yo'q"}
+                </TableCell>
+                <TableCell className="border p-2">
                   {user.createdAt?.toDate().toLocaleString() || "Ma'lumot yo'q"}
                 </TableCell>
                 <TableCell className="border p-2">
@@ -144,17 +130,13 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                     Batafsil
                   </Link>
                 </TableCell>
-                <TableCell className="border p-2 text-center">
-                  <EditEquipmentDialog equipmentId={user.id} />
-                  <ChangeLocationDialog equipmentId={user.id} currentBranchId={branchId} />
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default BranchRoomsID;
+export default AllEquipments

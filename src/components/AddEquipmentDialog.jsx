@@ -218,7 +218,7 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
                 <SelectContent>
                   {users?.map((user, idx) => (
                     <SelectItem key={idx} value={user?.name}>
-                      {user?.name}
+                      {user?.name} {user?.surname}
                     </SelectItem>
                   ))}
                 </SelectContent>
