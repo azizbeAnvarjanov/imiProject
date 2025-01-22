@@ -83,7 +83,7 @@ const AllEquipments = () => {
                   {user.branchName || "Ma'lumot yo'q"}
                 </TableCell>
                 <TableCell className="border p-2">
-                  {user.roomName || "Ma'lumot yo'q"}
+                  {user.roomName || user.wareHouseName || "Ma'lumot yo'q"}
                 </TableCell>
                 <TableCell className="border p-2">
                   {user.inventoryNumber || "Ma'lumot yo'q"}

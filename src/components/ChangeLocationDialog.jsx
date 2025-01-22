@@ -83,10 +83,23 @@ const ChangeLocationDialog = ({ equipmentId, currentBranchId }) => {
     }
 
     try {
+      // Filial nomini olish
+      const branchName = branches.find((branch) => branch.id === selectedBranch)
+        ?.name;
+
+      // Joylashuv nomini olish
+      const locationName = locations.find(
+        (location) => location.id === selectedLocation
+      )?.name;
+
+      // Jihozni yangilash
       const docRef = doc(db, "equipments", equipmentId);
       await updateDoc(docRef, {
         location: selectedLocation, // Tanlangan joylashuv ID'si
         branchId: selectedBranch, // Tanlangan filial ID'si
+        branchName: branchName, // Filial nomi
+        roomName: locationType === "room" ? locationName : "", // Xona nomi
+        wareHouseName: locationType === "wareHouses" ? locationName : "", // Ombor nomi
       });
 
       setLoading(false);
@@ -95,6 +108,7 @@ const ChangeLocationDialog = ({ equipmentId, currentBranchId }) => {
     } catch (error) {
       console.error("Error updating location and branch:", error);
       toast.error("Error updating location and branch");
+      setLoading(false);
     }
   };
 
