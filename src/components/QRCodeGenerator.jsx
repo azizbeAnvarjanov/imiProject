@@ -54,7 +54,9 @@ const QRCodeManager = ({ equipmentId, equipmentName }) => {
 
     try {
       // QR kodni yaratish
-      const qrCodeData = await QRCode.toDataURL(equipmentId);
+      const qrCodeData = await QRCode.toDataURL(
+        `https://imi-project.vercel.app/equipment/${equipmentId}`
+      );
 
       // Firebase Storage'ga yuklash
       const storageRef = ref(storage, `qrcodes/${equipmentId}.png`);
