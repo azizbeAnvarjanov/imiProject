@@ -14,6 +14,7 @@ import {
   CardContent,
   CardDescription,
 } from "@/components/ui/card"; // Shadcn UI Card
+import { db } from "@/app/firebase";
 
 const DynamicTypeCounter = ({ collectionName }) => {
   const [tagsData, setTagsData] = useState([]);
@@ -21,7 +22,6 @@ const DynamicTypeCounter = ({ collectionName }) => {
 
   useEffect(() => {
     const fetchTags = async () => {
-      const db = getFirestore();
       setLoading(true);
 
       try {

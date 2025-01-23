@@ -61,7 +61,7 @@ const DynamicTagCounter = ({ collectionName }) => {
   }, [collectionName]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 border shadow-lg overflow-y-scroll max-h-[100vh] p-3 rounded-lg">
       {loading ? (
         <p>Yuklanmoqda...</p>
       ) : (

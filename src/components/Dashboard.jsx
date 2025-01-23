@@ -47,6 +47,7 @@ const Dashboard = () => {
         </>
       ),
       button_text: <>More....</>,
+      link: "/all-equipments",
     },
     {
       icon: (
@@ -62,6 +63,7 @@ const Dashboard = () => {
         </>
       ),
       button_text: <>More....</>,
+      link: "/types",
     },
     {
       icon: (
@@ -79,6 +81,8 @@ const Dashboard = () => {
         </>
       ),
       button_text: <>More....</>,
+      link: "/all-equipment",
+
     },
     {
       icon: (
@@ -96,21 +100,8 @@ const Dashboard = () => {
         </>
       ),
       button_text: <>More....</>,
-    },
-    {
-      icon: (
-        <>
-          <UsersRound color="green" />
-        </>
-      ),
-      text: <>Foydalanuvchilar</>,
-      result: <>{users.length === 0 ? <>loading...</> : <>{users.length}</>}</>,
-      button_icon: (
-        <>
-          <SquareArrowUpRight size="15px" />
-        </>
-      ),
-      button_text: <>More....</>,
+      link: "/all-equipment",
+
     },
     {
       icon: (
@@ -126,6 +117,8 @@ const Dashboard = () => {
         </>
       ),
       button_text: <>More....</>,
+      link: "/all-equipment",
+
     },
     {
       icon: (
@@ -143,6 +136,7 @@ const Dashboard = () => {
         </>
       ),
       button_text: <>More....</>,
+      link: "/all-equipment",
     },
     {
       icon: (
@@ -160,21 +154,25 @@ const Dashboard = () => {
         </>
       ),
       button_text: <>More....</>,
+      link: "/branches",
+
     },
   ];
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 p-4 bg-[#e1e6ed1d]">
-        <TotalPriceCalculator />
-        {cards.map((item, idx) => (
-          <div key={idx}>
-            <CardNew item={item} />
-          </div>
-        ))}
+      <div className="flex gap-3 p-5">
+        <div className="border flex flex-wrap items-start justify-start p-4 shadow-lg rounded-md w-[80%] h-fit gap-3">
+          <TotalPriceCalculator />
+          {cards.map((item, idx) => (
+            <div key={idx}>
+              <CardNew item={item} />
+            </div>
+          ))}
+        </div>
+        <DynamicTagCounter collectionName="equipments" />
       </div>
       <div className="p-5">
-        <DynamicTagCounter collectionName="equipments" />
         <br />
         <DynamicTypeCounter collectionName="equipments" />
         <br />

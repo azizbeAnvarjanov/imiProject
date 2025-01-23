@@ -25,7 +25,7 @@ const TotalPriceCalculator = () => {
   }, [equipments]); // Jihozlar o'zgarishini kuzatish
 
   return (
-    <div className="total-price-calculator">
+    <div className="total-price-calculator w-[300px]">
       <div className="card sweeperCard o-hidden">
         <div className="p-5 border shadow-lg rounded-lg">
           <div className="font-bold mb-3">Umumiy summa</div>
