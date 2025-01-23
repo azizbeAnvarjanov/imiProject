@@ -1,9 +1,24 @@
-import React from 'react'
+"use client";
+import useDocument from "@/components/useDocument";
+import { useParams } from "next/navigation";
+import React from "react";
 
-const EquipmentDetails = () => {
+import EquipmentDetails from "@/components/EquipmentDetails";
+
+const EquipmentPage = () => {
+  const params = useParams();
+  const equipmentId = params.equipmentId;
+  const equipment = useDocument("equipments", equipmentId);
+
+  if (!equipment) {
+    return <h1>loading...</h1>;
+  }
+
   return (
-    <div>EquipmentDetails</div>
-  )
-}
+    <div>
+      <EquipmentDetails equipmentId={equipmentId} />
+    </div>
+  );
+};
 
-export default EquipmentDetails
+export default EquipmentPage;

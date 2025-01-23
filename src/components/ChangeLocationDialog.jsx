@@ -102,13 +102,14 @@ const ChangeLocationDialog = ({ equipmentId, currentBranchId }) => {
         wareHouseName: locationType === "wareHouses" ? locationName : "", // Ombor nomi
       });
 
-      setLoading(false);
-      setIsOpen(false);
       toast.success("Location and branch updated successfully!");
+      setLoading(false);
     } catch (error) {
       console.error("Error updating location and branch:", error);
       toast.error("Error updating location and branch");
       setLoading(false);
+    } finally {
+      setIsOpen(false);
     }
   };
 

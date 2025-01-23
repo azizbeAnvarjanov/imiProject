@@ -47,7 +47,6 @@ const BranchRoomsID = ({ roomId, branchId }) => {
       item[key]?.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
-  
 
   return (
     <div>
