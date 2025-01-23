@@ -22,7 +22,7 @@ const AllEquipments = () => {
   const equipments = useCollection("equipments");
   // Filtrlash funksiyasi
   const filteredData = equipments.filter((item) =>
-    ["name", "branchName", "status", "roomName", "tag"].some((key) =>
+    ["name", "branchName", "status", "roomName", "tag","type"].some((key) =>
       item[key]?.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );

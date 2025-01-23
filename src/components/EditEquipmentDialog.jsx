@@ -80,7 +80,7 @@ const EditEquipmentDialog = ({ equipmentId }) => {
       const docRef = doc(db, "equipments", equipmentId);
       await updateDoc(docRef, {
         ...equipmentData,
-        qrCode: equipmentData.qrCode,
+        qrCode: equipmentData?.qrCode,
         unitPrice, // Number turida saqlanadi
         quantity, // Number turida saqlanadi
         totalPrice, // Hisoblangan qiymat

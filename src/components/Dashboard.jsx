@@ -15,6 +15,9 @@ import {
   TrendingUp,
   UsersRound,
 } from "lucide-react";
+import DynamicTagCounter from "@/components/DynamicTagCounter";
+import DynamicTypeCounter from "@/components/DynamicTypeCounter";
+import DynamicStatusCounter from "@/components/DynamicStatusCounter";
 const Dashboard = () => {
   const equipments = useCollection("equipments");
   const types = useCollection("types");
@@ -161,13 +164,22 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 p-4 bg-[#e1e6ed1d]">
-      <TotalPriceCalculator />
-      {cards.map((item, idx) => (
-        <div key={idx}>
-          <CardNew item={item} />
-        </div>
-      ))}
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 p-4 bg-[#e1e6ed1d]">
+        <TotalPriceCalculator />
+        {cards.map((item, idx) => (
+          <div key={idx}>
+            <CardNew item={item} />
+          </div>
+        ))}
+      </div>
+      <div className="p-5">
+        <DynamicTagCounter collectionName="equipments" />
+        <br />
+        <DynamicTypeCounter collectionName="equipments" />
+        <br />
+        <DynamicStatusCounter collectionName="equipments" />
+      </div>
     </div>
   );
 };

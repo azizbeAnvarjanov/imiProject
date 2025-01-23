@@ -69,6 +69,7 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
         branchName,
         measure,
         type,
+        qrCode: null,
         tag: tag || "-",
         status,
         unitPrice: parseFloat(unitPrice),
@@ -100,7 +101,9 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
 
   return (
     <Dialog open={isOpen}>
-      <Button onClick={() => setIsOpen(true)}><CircleFadingPlus /></Button>
+      <Button onClick={() => setIsOpen(true)}>
+        <CircleFadingPlus />
+      </Button>
       <DialogContent>
         <DialogTitle>Add New Equipment</DialogTitle>
         <form>
