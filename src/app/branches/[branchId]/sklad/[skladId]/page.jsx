@@ -16,7 +16,9 @@ const SkladDetails = () => {
   return (
     <div className="p-5">
       <div className="flex items-center justify-between mb-3">
-        <h1 className="font-bold text-2xl">{currentRoom?.name}</h1>
+        <h1 className="font-bold text-2xl">
+          {branch?.name} - {currentRoom?.name}
+        </h1>
         <AddEquipmentDialog
           branchId={branchId}
           roomId={skladId}

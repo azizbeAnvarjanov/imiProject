@@ -2,6 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useCollection from "../components/useCollection";
+import TotalPriceCalculator from "@/components/TotalPriceCalculator";
 const Dashboard = () => {
   const equipments = useCollection("equipments");
   const types = useCollection("types");
@@ -14,6 +15,7 @@ const Dashboard = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <TotalPriceCalculator />
       <Card>
         <CardHeader>
           <CardTitle>Umumiy Jihozlar</CardTitle>
@@ -54,14 +56,7 @@ const Dashboard = () => {
           {measures.length === 0 ? <>loading...</> : <>{measures.length}</>}
         </CardContent>
       </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Bo'limlar</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {equipments.length === 0 ? <>loading...</> : <>{equipments.length}</>}
-        </CardContent>
-      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>Foydalanuvchilar</CardTitle>

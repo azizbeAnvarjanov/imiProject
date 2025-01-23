@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "./ui/label";
 import toast from "react-hot-toast";
+import { DoorOpen } from "lucide-react";
 
 const ChangeLocationDialog = ({ equipmentId, currentBranchId }) => {
   const [locations, setLocations] = useState([]);
@@ -115,7 +116,7 @@ const ChangeLocationDialog = ({ equipmentId, currentBranchId }) => {
 
   return (
     <Dialog open={isOpen}>
-      <Button onClick={() => setIsOpen(true)}>Change Location</Button>
+      <Button onClick={() => setIsOpen(true)}><DoorOpen /></Button>
       <DialogContent>
         <DialogTitle>Change Location and Branch</DialogTitle>
         <div className="space-y-4">

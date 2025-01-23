@@ -18,6 +18,8 @@ import {
 import EditEquipmentDialog from "@/components/EditEquipmentDialog";
 import ChangeLocationDialog from "@/components/ChangeLocationDialog";
 import SearchInput from "@/components/SearchInput";
+import { Button } from "./ui/button";
+import { Eye, SquareArrowOutUpRight } from "lucide-react";
 
 const BranchRoomsID = ({ roomId, branchId }) => {
   const [equipments, setEquipments] = useState([]);
@@ -41,6 +43,7 @@ const BranchRoomsID = ({ roomId, branchId }) => {
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, [roomId, db]);
+
   // Filtrlash funksiyasi
   const filteredData = equipments.filter((item) =>
     ["name", "branchName", "status"].some((key) =>
@@ -58,7 +61,7 @@ const BranchRoomsID = ({ roomId, branchId }) => {
       {filteredData.length === 0 ? (
         <>no equipments</>
       ) : (
-        <div>
+        <div className="mt-3">
           <Table className="w-full border-collapse border border-gray-200 overflow-x-scroll min-w-[1000px]">
             <TableHeader>
               <TableRow>
@@ -97,10 +100,6 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                 </TableCell>
                 <TableCell className="bg-gray-500 text-white font-bold">
                   Qabul qildi
-                </TableCell>
-
-                <TableCell className="bg-gray-500 text-white font-bold">
-                  Link
                 </TableCell>
                 <TableCell className="bg-gray-500 text-white font-bold">
                   Amallar
@@ -147,21 +146,17 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                   <TableCell className="border p-2">
                     {user.receiver || "Ma'lumot yo'q"}
                   </TableCell>
-
-                  <TableCell className="border p-2 text-center">
-                    <Link
-                      href={`/equipment/${user.id}`}
-                      className="text-blue-500 underline hover:text-blue-700 ml-2"
-                    >
-                      Batafsil
-                    </Link>
-                  </TableCell>
-                  <TableCell className="border p-2 text-center">
+                  <TableCell className="border p-2 text-center flex gap-1 border-none">
                     <EditEquipmentDialog equipmentId={user.id} />
                     <ChangeLocationDialog
                       equipmentId={user.id}
                       currentBranchId={branchId}
                     />
+                    <Link target="_blank" href={`/equipment/${user.id}`}>
+                      <Button>
+                        <SquareArrowOutUpRight />
+                      </Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}

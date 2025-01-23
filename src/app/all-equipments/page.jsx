@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 import Link from "next/link";
 import {
@@ -12,15 +12,33 @@ import {
 import useCollection from "@/components/useCollection";
 import ViewQrCode from "@/components/ViewQrCode";
 import { SquareArrowOutUpRight } from "lucide-react";
+import SearchInput from "@/components/SearchInput";
 
 const AllEquipments = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const equipments = useCollection("equipments");
+  // Filtrlash funksiyasi
+  const filteredData = equipments.filter((item) =>
+    ["name", "branchName", "status","roomName","inventoryNumber","tag"].some((key) =>
+      item[key]?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
   return (
     <div className="p-5 overflow-x-auto">
-      {equipments.length === 0 ? (
+      <div>
+        <h1>All equipments</h1>
+        <div></div>
+      </div>
+      <SearchInput
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        placeholder="Search by name..."
+      />
+      {filteredData.length === 0 ? (
         <>no equipments</>
       ) : (
-        <Table className="w-[2000px] border-collapse border border-gray-200">
+        <Table className="w-[2000px] border-collapse border border-gray-200 mt-4">
           <TableHeader>
             <TableRow>
               <TableCell className="bg-gray-500 text-white font-bold">
@@ -78,7 +96,7 @@ const AllEquipments = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {equipments.map((user, index) => (
+            {filteredData.map((user, index) => (
               <TableRow key={user.id}>
                 <TableCell className="border p-2 text-center">
                   {index + 1}
@@ -95,14 +113,14 @@ const AllEquipments = () => {
 
                 <TableCell className="border p-2 hover:underline hover:text-blue-600">
                   {/* {user.branchName || "Ma'lumot yo'q"} */}
-                  <Link href={`/branches/${user.branchId}`} target="_blanck">
+                  <Link href={`/branches/${user.branchId}`} target="_blank">
                     {user.branchName || "Ma'lumot yo'q"}
                   </Link>
                 </TableCell>
 
                 <TableCell className="border p-2 hover:underline hover:text-blue-600">
                   <Link
-                    target="_blanck"
+                    target="_blank"
                     href={`/branches/${user.branchId}/${
                       user.roomName ? "room" : "sklad"
                     }/${user.location}`}
@@ -111,7 +129,7 @@ const AllEquipments = () => {
                   </Link>
                 </TableCell>
                 <TableCell className="border p-2 hover:underline hover:text-blue-600">
-                  <Link href={`/equipment/${user.id}`} target="_blanck">
+                  <Link href={`/equipment/${user.id}`} target="_blank">
                     {user.name || "Ma'lumot yo'q"}
                   </Link>
                 </TableCell>
@@ -151,7 +169,7 @@ const AllEquipments = () => {
 
                 <TableCell className="border text-center flex items-center justify-center border-none">
                   <Link
-                    target="_blanck"
+                    target="_blank"
                     href={`/equipment/${user.id}`}
                     className="text-blue-500 underline hover:text-blue-700 ml-2"
                   >

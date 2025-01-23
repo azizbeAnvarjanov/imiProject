@@ -14,6 +14,7 @@ import { Button } from "./ui/button";
 import useCollection from "./useCollection";
 import { Label } from "./ui/label";
 import toast from "react-hot-toast";
+import { ClipboardPen } from "lucide-react";
 
 const EditEquipmentDialog = ({ equipmentId }) => {
   const [equipmentData, setEquipmentData] = useState(null);
@@ -99,7 +100,9 @@ const EditEquipmentDialog = ({ equipmentId }) => {
 
   return (
     <Dialog open={isOpen}>
-      <DialogTrigger onClick={() => setIsOpen(true)}>Edit</DialogTrigger>
+      <Button onClick={() => setIsOpen(true)}>
+        <ClipboardPen size="15px" />
+      </Button>
       <DialogContent>
         <DialogTitle>Edit Equipment</DialogTitle>
         <div>

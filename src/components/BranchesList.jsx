@@ -4,8 +4,7 @@ import React from "react";
 import Link from "next/link";
 import useCollection from "./useCollection";
 
-const BranchesLists = () => {
-  const branches = useCollection("branches");
+const BranchesLists = ({ branches }) => {
 
   return (
     <div>

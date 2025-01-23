@@ -7,10 +7,12 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import Link from "next/link";
+import SearchInput from "./SearchInput";
 
 const BranchRooms = ({ branchId }) => {
   const [rooms, setRooms] = useState([]);
   const db = getFirestore(); // Initialize Firestore
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const q = query(collection(db, "rooms"), where("branchId", "==", branchId));
@@ -27,11 +29,23 @@ const BranchRooms = ({ branchId }) => {
     return () => unsubscribe();
   }, [branchId, db]);
 
+  // Filtrlash funksiyasi
+  const filteredRooms = rooms.filter((item) =>
+    ["name"].some((key) =>
+      item[key]?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
   return (
     <div>
-      <h2>Rooms for Branch: {branchId}</h2>
+      <h2>Rooms</h2>
+      <SearchInput
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        placeholder="Search by name..."
+      />
       <ul className="flex gap-4 my-5">
-        {rooms.map((room) => (
+        {filteredRooms.map((room) => (
           <Link
             href={`/branches/${branchId}/room/${room.id}`}
             className="border py-2 px-5 rounded-xl shadow-md"

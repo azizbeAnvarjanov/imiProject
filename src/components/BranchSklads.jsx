@@ -7,10 +7,12 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import Link from "next/link";
+import SearchInput from "./SearchInput";
 
 const BranchSklads = ({ branchId }) => {
   const [wareHouses, setWareHouses] = useState([]);
   const db = getFirestore(); // Initialize Firestore
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const q = query(
@@ -30,12 +32,24 @@ const BranchSklads = ({ branchId }) => {
     return () => unsubscribe();
   }, [branchId, db]);
 
+  // Filtrlash funksiyasi
+  const filteredSklads = wareHouses.filter((item) =>
+    ["name"].some((key) =>
+      item[key]?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
   return (
     <div className="p-3">
       <h2>Sklads for Branch: {branchId}</h2>
+      <SearchInput
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        placeholder="Search by name..."
+      />
       <br />
       <ul className="flex gap-4">
-        {wareHouses.map((wareHouse) => (
+        {filteredSklads.map((wareHouse) => (
           <Link
             href={`/branches/${branchId}/sklad/${wareHouse.id}`}
             className="border py-2 px-5 rounded-xl shadow-md"
