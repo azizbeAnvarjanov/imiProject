@@ -20,6 +20,7 @@ import ChangeLocationDialog from "@/components/ChangeLocationDialog";
 import SearchInput from "@/components/SearchInput";
 import { Button } from "./ui/button";
 import { Eye, SquareArrowOutUpRight } from "lucide-react";
+import ViewQrCode from "./ViewQrCode";
 
 const BranchRoomsID = ({ roomId, branchId }) => {
   const [equipments, setEquipments] = useState([]);
@@ -69,6 +70,9 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                   №
                 </TableCell>
                 <TableCell className="bg-gray-500 text-white font-bold">
+                  QR
+                </TableCell>
+                <TableCell className="bg-gray-500 text-white font-bold">
                   Invertar raqami
                 </TableCell>
                 <TableCell className="bg-gray-500 text-white font-bold">
@@ -111,6 +115,15 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                 <TableRow key={user.id}>
                   <TableCell className="border p-2 text-center">
                     {index + 1}
+                  </TableCell>
+                  <TableCell className="border p-2 text-center">
+                    {user.qrCode ? (
+                      <>
+                        <ViewQrCode url={user.qrCode} />
+                      </>
+                    ) : (
+                      <>-</>
+                    )}
                   </TableCell>
                   <TableCell className="border p-2">
                     {user.inventoryNumber || "Ma'lumot yo'q"}

@@ -20,9 +20,14 @@ const AllEquipments = () => {
   const equipments = useCollection("equipments");
   // Filtrlash funksiyasi
   const filteredData = equipments.filter((item) =>
-    ["name", "branchName", "status","roomName","inventoryNumber","tag"].some((key) =>
-      item[key]?.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    [
+      "name",
+      "branchName",
+      "status",
+      "roomName",
+      "inventoryNumber",
+      "tag",
+    ].some((key) => item[key]?.toLowerCase().includes(searchTerm.toLowerCase()))
   );
   return (
     <div className="p-5 overflow-x-auto">
@@ -45,7 +50,7 @@ const AllEquipments = () => {
                 №
               </TableCell>
               <TableCell className="bg-gray-500 text-white font-bold">
-                QR Code
+                QR
               </TableCell>
               <TableCell className="bg-gray-500 text-white font-bold">
                 Filial
@@ -101,7 +106,7 @@ const AllEquipments = () => {
                 <TableCell className="border p-2 text-center">
                   {index + 1}
                 </TableCell>
-                <TableCell className="border p-2">
+                <TableCell className="border">
                   {user.qrCode ? (
                     <>
                       <ViewQrCode url={user.qrCode} />

@@ -7,15 +7,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog-2";
-import { Eye } from "lucide-react";
+import { Eye, QrCode } from "lucide-react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 
 const ViewQrCode = ({ url }) => {
   return (
     <Dialog>
-      <DialogTrigger className="bg-black py-2 px-3 text-white hover:bg-opacity-70 transition-all rounded-sm">
-        <Eye size="18px" />
+      <DialogTrigger className="bg-black p-2 text-white hover:bg-opacity-70 transition-all rounded-sm">
+        <QrCode />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
