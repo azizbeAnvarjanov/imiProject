@@ -23,7 +23,7 @@ const AdminSidebar = async () => {
             </Link>
           </li>
           <li className="p-3 hover:bg-muted rounded-md">
-            <Link href="/admin/all-equipments">
+            <Link href="/all-equipments">
               <h1 className="font-bold">Barcha jihozlar</h1>
             </Link>
           </li>

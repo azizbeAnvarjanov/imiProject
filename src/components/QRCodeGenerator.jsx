@@ -5,16 +5,21 @@ import {
   ref,
   uploadString,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
+import { Button } from "./ui/button";
+import { Download, Trash } from "lucide-react";
+import Link from "next/link";
 
 const QRCodeManager = ({ equipmentId, equipmentName }) => {
   const [qrUrl, setQrUrl] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const db = getFirestore(); // Firebase Firestore'ni oling
-  const storage = getStorage(); // Firebase Storage'ni oling
+  const db = getFirestore(); // Firebase Firestore
+  const storage = getStorage(); // Firebase Storage
 
   // Jihoz ma'lumotini olish
   const fetchEquipmentData = async () => {
@@ -55,7 +60,11 @@ const QRCodeManager = ({ equipmentId, equipmentName }) => {
     try {
       // QR kodni yaratish
       const qrCodeData = await QRCode.toDataURL(
-        `https://imi-project.vercel.app/equipment/${equipmentId}`
+        `https://imi-project.vercel.app/equipment/${equipmentId}`,
+        {
+          width: 1000,
+          margin: 2,
+        }
       );
 
       // Firebase Storage'ga yuklash
@@ -80,6 +89,46 @@ const QRCodeManager = ({ equipmentId, equipmentName }) => {
     }
   };
 
+  // QR kodni yuklab olish funksiyasi
+  const downloadQRCode = () => {
+    if (!qrUrl) return;
+
+    const link = document.createElement("a");
+    link.href = qrUrl;
+    link.download = `${equipmentName || "qrcode"}.png`;
+    link.click();
+    toast.success("QR kod yuklab olindi!");
+  };
+
+  // QR kodni o'chirish funksiyasi
+  const deleteQRCode = async () => {
+    if (!qrUrl) {
+      toast.error("QR kod mavjud emas!");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // Firebase Storage'dan rasmni o'chirish
+      const storageRef = ref(storage, `qrcodes/${equipmentId}.png`);
+      await deleteObject(storageRef);
+
+      // Firestore'da QR kod URL'sini o'chirish
+      const equipmentRef = doc(db, "equipments", equipmentId);
+      await updateDoc(equipmentRef, { qrCode: null });
+
+      // State ni yangilash
+      setQrUrl(null);
+      toast.success("QR kod muvaffaqiyatli o'chirildi!");
+    } catch (error) {
+      console.error("QR kodni o'chirishda xatolik:", error);
+      toast.error("Xatolik yuz berdi, qayta urinib ko'ring.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="qr-code-manager">
       <h2 className="text-lg font-semibold mb-4">
@@ -87,18 +136,27 @@ const QRCodeManager = ({ equipmentId, equipmentName }) => {
       </h2>
 
       {qrUrl ? (
-        <div className="mt-4">
-          <img src={qrUrl} alt="QR Code" className="border rounded" />
-          <p className="text-sm mt-2 text-gray-600">QR kod URL: {qrUrl}</p>
+        <div className="my-4 relative border w-[200px] h-[200px] rounded-md">
+          <Image fill src={qrUrl} alt="QR Code" />
+          <div className="flex flex-col gap-2 absolute left-[104%] top-0">
+            <Button>
+              <Link href={qrUrl} target="_blank" download={qrUrl}>
+                <Download />
+              </Link>
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={deleteQRCode}
+              disabled={loading}
+            >
+              <Trash />
+            </Button>
+          </div>
         </div>
       ) : (
-        <button
-          onClick={generateQRCode}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          disabled={loading}
-        >
+        <Button onClick={generateQRCode} disabled={loading}>
           {loading ? "Yaratilmoqda..." : "QR kod yaratish"}
-        </button>
+        </Button>
       )}
 
       {loading && (

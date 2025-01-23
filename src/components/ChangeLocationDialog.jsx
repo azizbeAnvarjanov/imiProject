@@ -115,9 +115,7 @@ const ChangeLocationDialog = ({ equipmentId, currentBranchId }) => {
 
   return (
     <Dialog open={isOpen}>
-      <DialogTrigger as={Button} onClick={() => setIsOpen(true)}>
-        Change Location
-      </DialogTrigger>
+      <Button onClick={() => setIsOpen(true)}>Change Location</Button>
       <DialogContent>
         <DialogTitle>Change Location and Branch</DialogTitle>
         <div className="space-y-4">

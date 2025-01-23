@@ -69,8 +69,14 @@ const EquipmentDetails = ({ equipmentId }) => {
 
   return (
     <div className="p-4 bg-white rounded shadow">
-      <h1 className="text-xl font-bold mb-4">Equipment Details</h1>
-    <QRCodeGenerator equipmentId={equipmentId} equipmentName={formData.name} />
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-bold mb-4">Equipment Details</h1>
+        <ChangeLocationDialog equipmentId={equipmentId} />
+      </div>
+      <QRCodeGenerator
+        equipmentId={equipmentId}
+        equipmentName={formData.name}
+      />
 
       <div className="mb-4">
         <Label
