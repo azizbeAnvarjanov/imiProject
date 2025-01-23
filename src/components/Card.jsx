@@ -1,49 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-import useCollection from "../components/useCollection";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { DollarSign, GalleryHorizontalEnd } from "lucide-react";
-import styled from "styled-components";
 import Link from "next/link";
+import React from "react";
+import styled from "styled-components";
 
-const TotalPriceCalculator = () => {
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const equipments = useCollection("equipments");
-
-  console.log(equipments);
-
-  useEffect(() => {
-    if (equipments && equipments.length > 0) {
-      let total = 0;
-      equipments.forEach((doc) => {
-        if (doc.totalPrice) {
-          total += parseFloat(doc.totalPrice);
-        }
-      });
-      setTotalPrice(total);
-    }
-  }, [equipments]); // Jihozlar o'zgarishini kuzatish
-
+const Card = ({ item }) => {
   return (
-    <div className="total-price-calculator">
-      <StyledWrapper>
-        <div className="card sweeperCard o-hidden">
-          <div className="containers">
-            <div className="icon">
-              <DollarSign  color="green" />
-            </div>
-            <div className="title my-3 text-wrap">Umumiy summa</div>
-            <div className="text-3xl font-bold">
-              {totalPrice?.toLocaleString()}
-            </div>
-            <Link href="#" className="mt-3 flex items-center gap-4">
-              More...
-            </Link>
+    <StyledWrapper>
+      <div className="card sweeperCard o-hidden">
+        <div className="containers">
+          <div className="icon">{item.icon}</div>
+          <div className="title my-3 text-wrap">{item.text}</div>
+          <div className="text-3xl font-bold">
+            {item.result}
           </div>
+          <Link href="#" className="mt-3 flex items-center gap-4">
+            {item.button_text}
+            {item.button_icon}
+          </Link>
         </div>
-      </StyledWrapper>
-    </div>
+      </div>
+    </StyledWrapper>
   );
 };
 
@@ -133,4 +108,4 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default TotalPriceCalculator;
+export default Card;

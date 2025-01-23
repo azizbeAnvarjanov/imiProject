@@ -17,10 +17,14 @@ import {
 
 import EditEquipmentDialog from "@/components/EditEquipmentDialog";
 import ChangeLocationDialog from "@/components/ChangeLocationDialog";
+import TableTotalPrice from "@/components/TableTotalPrice";
 import SearchInput from "@/components/SearchInput";
 import { Button } from "./ui/button";
 import { Eye, SquareArrowOutUpRight } from "lucide-react";
 import ViewQrCode from "./ViewQrCode";
+import TableExportToExcel from "./TableExportToExcel";
+import TablePrint from "./TablePrint";
+import DeleteDialog from "./DeleteDialog";
 
 const BranchRoomsID = ({ roomId, branchId }) => {
   const [equipments, setEquipments] = useState([]);
@@ -59,10 +63,18 @@ const BranchRoomsID = ({ roomId, branchId }) => {
         setSearchTerm={setSearchTerm}
         placeholder="Search by name..."
       />
+      <div className="flex gap-2">
+        <TablePrint tableId="equipmentTable" />
+        <TableExportToExcel
+          data={filteredData}
+          fileName={`${roomId} - jihozlari`}
+        />
+      </div>
+      <TableTotalPrice data={filteredData} />
       {filteredData.length === 0 ? (
         <>no equipments</>
       ) : (
-        <div className="mt-3">
+        <div className="mt-3" id="equipmentTable">
           <Table className="w-full border-collapse border border-gray-200 overflow-x-scroll min-w-[1000px]">
             <TableHeader>
               <TableRow>
@@ -170,6 +182,7 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                         <SquareArrowOutUpRight />
                       </Button>
                     </Link>
+                    <DeleteDialog id={user.id} name={user.name} />
                   </TableCell>
                 </TableRow>
               ))}

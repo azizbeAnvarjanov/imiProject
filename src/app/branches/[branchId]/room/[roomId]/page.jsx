@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import React from "react";
 import useDocument from "@/components/useDocument";
 import AddEquipmentDialog from "@/components/AddEquipmentDialog";
-import useCollection from "@/components/useCollection";
+import ImportingEquipmentExcel from "@/components/ImportingEquipmentExcel";
 
 import BranchRoomsID from "@/components/BranchRoomsID";
 
@@ -19,12 +19,20 @@ const RoomDetails = () => {
         <h1 className="font-bold text-2xl">
           {branch?.name} - {currentRoom?.name}
         </h1>
-        <AddEquipmentDialog
-          branchId={branchId}
-          roomId={roomId}
-          roomName={currentRoom?.name}
-          branchName={branch?.name}
-        />
+        <div className="flex gap-3">
+          <AddEquipmentDialog
+            branchId={branchId}
+            roomId={roomId}
+            roomName={currentRoom?.name}
+            branchName={branch?.name}
+          />
+          <ImportingEquipmentExcel
+            branchId={branchId}
+            roomId={roomId}
+            roomName={currentRoom?.name}
+            branchName={branch?.name}
+          />
+        </div>
       </div>
 
       <div>

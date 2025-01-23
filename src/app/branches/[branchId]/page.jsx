@@ -7,7 +7,7 @@ import BranchSklads from "../../../components/BranchSklads";
 import AddRoomDialog from "../../../components/AddRoomDialog";
 import AddWarehouseModal from "../../../components/AddWarehouseModal";
 import useCollection from "@/components/useCollection";
-import SearchInput from "@/components/SearchInput";
+import Loader from "@/components/Loader";
 
 const BranchDetails = () => {
   const params = useParams();
@@ -34,7 +34,9 @@ const BranchDetails = () => {
           <BranchSklads branchId={branchId} />
         </div>
       ) : (
-        <p>Loading...</p>
+        <div className="w-full h-screen grid place-content-center">
+          <Loader />
+        </div>
       )}
     </div>
   );

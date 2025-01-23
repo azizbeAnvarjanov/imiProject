@@ -13,28 +13,29 @@ import useCollection from "@/components/useCollection";
 import ViewQrCode from "@/components/ViewQrCode";
 import { SquareArrowOutUpRight } from "lucide-react";
 import SearchInput from "@/components/SearchInput";
-
+import TableTotalPrice from "@/components/TableTotalPrice";
+import TableExportToExcel from "@/components/TableExportToExcel";
+import TablePrint from "@/components/TablePrint";
 const AllEquipments = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const equipments = useCollection("equipments");
   // Filtrlash funksiyasi
   const filteredData = equipments.filter((item) =>
-    [
-      "name",
-      "branchName",
-      "status",
-      "roomName",
-      "inventoryNumber",
-      "tag",
-    ].some((key) => item[key]?.toLowerCase().includes(searchTerm.toLowerCase()))
+    ["name", "branchName", "status", "roomName", "tag"].some((key) =>
+      item[key]?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   );
   return (
     <div className="p-5 overflow-x-auto">
-      <div>
-        <h1>All equipments</h1>
-        <div></div>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">All equipments</h1>
+        <div className="flex gap-3">
+          <TablePrint tableId="equipmentTable" />
+          <TableExportToExcel data={filteredData} fileName="Barcha Jihozlar" />
+        </div>
       </div>
+          <TableTotalPrice data={filteredData} />
       <SearchInput
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -43,7 +44,10 @@ const AllEquipments = () => {
       {filteredData.length === 0 ? (
         <>no equipments</>
       ) : (
-        <Table className="w-[2000px] border-collapse border border-gray-200 mt-4">
+        <Table
+          id="equipmentTable"
+          className="w-[2000px] border-collapse border border-gray-200 mt-4"
+        >
           <TableHeader>
             <TableRow>
               <TableCell className="bg-gray-500 text-white font-bold">
