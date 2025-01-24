@@ -9,8 +9,12 @@ import {
 import { db } from "@/app/firebase";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { Sheet } from "lucide-react";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 const DynamicTypeCounter = ({ collectionName }) => {
   const [tagsData, setTagsData] = useState([]);
@@ -71,6 +75,7 @@ const DynamicTypeCounter = ({ collectionName }) => {
   }, [search, tagsData]);
 
   // Diagramma uchun maʼlumotlar
+  const total = filteredData.reduce((sum, { count }) => sum + count, 0);
   const chartData = {
     labels: filteredData.map(({ tag }) => tag),
     datasets: [
@@ -78,23 +83,47 @@ const DynamicTypeCounter = ({ collectionName }) => {
         label: "Count",
         data: filteredData.map(({ count }) => count),
         backgroundColor: [
-          "#FF6384",
           "#36A2EB",
-          "#FFCE56",
+          "#FF6384",
           "#4BC0C0",
-          "#9966FF",
           "#FF9F40",
+          "#9966FF",
         ],
         hoverBackgroundColor: [
-          "#FF6384",
           "#36A2EB",
-          "#FFCE56",
+          "#FF6384",
           "#4BC0C0",
-          "#9966FF",
           "#FF9F40",
+          "#9966FF",
         ],
       },
     ],
+  };
+
+  const options = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const count = context.raw;
+            const percentage = ((count / total) * 100).toFixed(2); // Foizni hisoblash
+            return `${context.label}: ${count} (${percentage}%)`;
+          },
+        },
+      },
+      datalabels: {
+        color: "#fff",
+        anchor: "center",
+        align: "end",
+        formatter: (value, context) => {
+          const percentage = ((value / total) * 100).toFixed(2);
+          return `${percentage}%`;
+        },
+        font: {
+          size: 14,
+        },
+      },
+    },
   };
 
   const handleExport = () => {
@@ -115,48 +144,45 @@ const DynamicTypeCounter = ({ collectionName }) => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Filtr qismi */}
-      <div className="flex items-center justify-between">
-        <input
-          type="text"
-          placeholder="Type bo'yicha qidiring..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="p-2 border rounded w-full md:w-1/3"
-        />
-        <button
-          onClick={handleExport}
-          className="ml-4 px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
-        >
-          CSV-ni eksport qilish
-        </button>
-      </div>
+    <div className="flex gap-3">
+      <div className="w-[50%]">
+        {/* Filtr qismi */}
+        <div className="flex items-center justify-between">
+          <Input
+            type="text"
+            placeholder="Type bo'yicha qidiring..."
+            value={search}
+            className="w-[400px]"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Button onClick={handleExport}> Export <Sheet /></Button>
+        </div>
 
-      {/* Yumaloq diagramma */}
-      <div className="border h-[500px] p-10">
-        <h2 className="text-center text-xl font-bold mb-4">
-          Jihozlar soni bo'yicha statistikasi
-        </h2>
-        {filteredData.length > 0 ? (
-          <Pie updateMode="resize" data={chartData}/>
-        ) : (
-          <p className="text-center">Ma'lumotlar topilmadi</p>
-        )}
+        {/* Yumaloq diagramma */}
+        <div className="h-[500px] p-10">
+          <h2 className="text-center text-xl font-bold mb-4">
+            Jihozlar turlari bo'yicha statistikasi
+          </h2>
+          {filteredData.length > 0 ? (
+            <Pie updateMode="resize" data={chartData} options={options} />
+          ) : (
+            <p className="text-center">Ma'lumotlar topilmadi</p>
+          )}
+        </div>
       </div>
 
       {/* Karta ko'rinishi */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="w-[50%] space-y-4">
         {loading ? (
           <p>Yuklanmoqda...</p>
         ) : (
           filteredData.map(({ tag, count }) => (
             <div
               key={tag}
-              className="p-5 border shadow-lg rounded-lg flex items-center justify-between"
+              className="p-2 border shadow-lg rounded-lg flex items-center justify-between"
             >
-              <h3 className="text-xl font-semibold">{tag}</h3>
-              <p className="text-xl font-bold w-[50px] h-[50px] border grid place-content-center rounded-md shadow-lg">
+              <h3 className="font-medium ml-2">{tag}</h3>
+              <p className="text-xl font-bold w-[50px] h-[50px] border grid place-content-center rounded-md">
                 {count}
               </p>
             </div>

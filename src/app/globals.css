@@ -1,9 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 @layer base {
@@ -170,4 +171,27 @@ body {
 .loader .bar12 {
   transform: rotate(330deg) translate(0, -130%);
   animation-delay: -0.1s;
+}
+body::-webkit-scrollbar {
+	width: 10px;
+}
+.scrollth::-webkit-scrollbar {
+	width: 0px;
+}
+
+.scrollth::-webkit-scrollbar-track {
+	background-color: rgb(255, 255, 255);
+	-webkit-border-radius: 1px;
+}
+body::-webkit-scrollbar-track {
+	background-color: rgb(255, 255, 255);
+	-webkit-border-radius: 1px;
+}
+.scrollth::-webkit-scrollbar-thumb:vertical {
+	background-color: #ededed;
+	-webkit-border-radius: 50px;
+    -webkit-width:5;
+}
+.scrollth::-webkit-scrollbar-thumb:vertical:hover {
+	background: rgba(0, 245, 255, 0.65);
 }

@@ -2,57 +2,65 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import GetUserFS from "./GetUserFS";
+import Image from "next/image";
+import {
+  GalleryVerticalEnd,
+  LayoutPanelLeft,
+  LogOut,
+  Settings,
+} from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const AdminSidebar = async () => {
-  const user = await GetUserFS();
   return (
     <div>
-      <div className="border border-r-2 fixed left-0 top-0 h-screen w-[35vh] p-5">
-      <h1 className="text-center w-full">{user && user.given_name +" " + user.family_name}</h1>
-        <Link
-          href="/"
-          className="p-3 hover:bg-muted rounded-md w-full flex font-bold"
-        >
-          Main page
-        </Link>
-        <ul className="mt-4">
-          <li className="p-3 hover:bg-muted rounded-md">
-            <Link href="/branches">
-              <h1 className="font-bold">Filiallar</h1>
+      <div className="border-r bg-white fixed left-0 top-0 h-screen w-[35vh] p-4">
+        <div className="flex gap-4 items-center p-3">
+          <div className="w-[40px] h-[40px] border rounded-full shadow-lg relative">
+            <Link href="/">
+              <Image src="/logo.png" alt="" fill />
             </Link>
-          </li>
-          <li className="p-3 hover:bg-muted rounded-md">
-            <Link href="/all-equipments">
-              <h1 className="font-bold">Barcha jihozlar</h1>
+          </div>
+
+          <div className="flex flex-col">
+            <Link href="/" className="font-medium">
+              Impuls Tibbiyot
             </Link>
-          </li>
-          <li className="p-3 hover:bg-muted rounded-md">
-            <Link href="/all-equipments">
-              <h1 className="font-bold">Xonalar</h1>
+            <Link href="/" className="font-medium">
+              Instituti platformasi
             </Link>
-          </li>
-          <li className="p-3 hover:bg-muted rounded-md">
-            <Link href="/all-equipments">
-              <h1 className="font-bold">Skladlar</h1>
-            </Link>
-          </li>
-          <li className="p-3 hover:bg-muted rounded-md">
-            <Link href="/equipment-history">
-              <h1 className="font-bold">Qabul tarixlari</h1>
-            </Link>
-          </li>
-          <li className="p-3 hover:bg-muted rounded-md">
-            <Link href="/sozlamalar">
-              <h1 className="font-bold">Sozlamalar</h1>
-            </Link>
-          </li>
+          </div>
+        </div>
+        <ul className="">
+          <Link
+            href="/branches"
+            className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+          >
+            <LayoutPanelLeft size="22px" />
+            <h1 className="font-medium">Filiallar</h1>
+          </Link>
+          <Link
+            href="/all-equipments"
+            className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+          >
+            <GalleryVerticalEnd size="22px" />
+            <h1 className="font-medium">Barcha jihozlar</h1>
+          </Link>
+
+          <Link
+            href="/sozlamalar"
+            className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+          >
+            <Settings size="22px" />
+            <h1 className="font-medium">Sozlamalar</h1>
+          </Link>
           <LogoutLink>
             <Button
               className="w-[90%] left-[50%] absolute bottom-5 -translate-x-[50%]"
               variant="destructive"
             >
-              Logout
+              <LogOut />
+              Tizimdan chiqish
             </Button>{" "}
           </LogoutLink>
           <br />

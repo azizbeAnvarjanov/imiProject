@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   images: {
-    domains: ["firebasestorage.googleapis.com"], // Firebase Storage domenini qo'shing
+    domains: ["firebasestorage.googleapis.com","gravatar.com","lh3.googleusercontent.com"], // Firebase Storage domenini qo'shing
   },
 };
 

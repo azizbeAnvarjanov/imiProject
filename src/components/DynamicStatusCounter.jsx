@@ -64,21 +64,26 @@ const DynamicStatusCounter = ({ collectionName }) => {
   }, [collectionName]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="w-full">
+      <h1 className="font-bold text-xl mb-3">
+        Jihoz statuslari boyicha statistika
+      </h1>
       {loading ? (
         <p>Yuklanmoqda...</p>
       ) : (
-        tagsData.map(({ tag, count }) => (
-          <div
-            key={tag}
-            className="p-5 border shadow-lg rounded-lg flex items-center justify-between"
-          >
-            <h3 className="text-xl font-semibold">{tag}</h3>
-            <p className="text-xl font-bold w-[50px] h-[50px] border grid place-content-center rounded-md shadow-lg">
-              {count}
-            </p>
-          </div>
-        ))
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {tagsData.map(({ tag, count }) => (
+            <div
+              key={tag}
+              className="p-2 border shadow-lg rounded-lg flex items-center justify-between"
+            >
+              <h3 className="font-medium ml-2">{tag}</h3>
+              <p className="text-xl font-bold w-[50px] h-[50px] border grid place-content-center rounded-md">
+                {count}
+              </p>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
