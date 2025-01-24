@@ -13,6 +13,7 @@ import {
   TrendingUp,
   UsersRound,
 } from "lucide-react";
+import Loader from "./Loader";
 const Statistics = () => {
   const equipments = useCollection("equipments");
   const types = useCollection("types");
@@ -32,7 +33,13 @@ const Statistics = () => {
       text: <>Umumiy Jihozlar</>,
       result: (
         <>
-          {equipments.length === 0 ? <>loading...</> : <>{equipments.length}</>}
+          {equipments.length === 0 ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>{equipments.length}</>
+          )}
         </>
       ),
       button_icon: (
@@ -50,7 +57,7 @@ const Statistics = () => {
         </>
       ),
       text: <>Turlari</>,
-      result: <>{types.length === 0 ? <>loading...</> : <>{types.length}</>}</>,
+      result: <>{types.length === 0 ? <Loader /> : <>{types.length}</>}</>,
       button_icon: (
         <>
           <SquareArrowUpRight size="15px" />
@@ -67,7 +74,15 @@ const Statistics = () => {
       ),
       text: <>Statuslari</>,
       result: (
-        <>{statuses.length === 0 ? <>loading...</> : <>{statuses.length}</>}</>
+        <>
+          {statuses.length === 0 ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>{statuses.length}</>
+          )}
+        </>
       ),
       button_icon: (
         <>
@@ -85,7 +100,15 @@ const Statistics = () => {
       ),
       text: <>O'lchov Birliklari</>,
       result: (
-        <>{measures.length === 0 ? <>loading...</> : <>{measures.length}</>}</>
+        <>
+          {measures.length === 0 ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>{measures.length}</>
+          )}
+        </>
       ),
       button_icon: (
         <>
@@ -102,7 +125,17 @@ const Statistics = () => {
         </>
       ),
       text: <>Xonalar</>,
-      result: <>{rooms.length === 0 ? <>loading...</> : <>{rooms.length}</>}</>,
+      result: (
+        <>
+          {rooms.length === 0 ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>{rooms.length}</>
+          )}
+        </>
+      ),
       button_icon: (
         <>
           <SquareArrowUpRight size="15px" />
@@ -119,7 +152,15 @@ const Statistics = () => {
       ),
       text: <>Skladlar</>,
       result: (
-        <>{sklads.length === 0 ? <>loading...</> : <>{sklads.length}</>}</>
+        <>
+          {sklads.length === 0 ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>{sklads.length}</>
+          )}
+        </>
       ),
       button_icon: (
         <>
@@ -137,7 +178,15 @@ const Statistics = () => {
       ),
       text: <>Filiallar</>,
       result: (
-        <>{branches.length === 0 ? <>loading...</> : <>{branches.length}</>}</>
+        <>
+          {branches.length === 0 ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>{branches.length}</>
+          )}
+        </>
       ),
       button_icon: (
         <>

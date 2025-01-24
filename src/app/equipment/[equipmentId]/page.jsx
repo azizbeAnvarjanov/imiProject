@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import React from "react";
 
 import EquipmentDetails from "@/components/EquipmentDetails";
+import Loader from "@/components/Loader";
 
 const EquipmentPage = () => {
   const params = useParams();
@@ -11,7 +12,7 @@ const EquipmentPage = () => {
   const equipment = useDocument("equipments", equipmentId);
 
   if (!equipment) {
-    return <h1>loading...</h1>;
+    return <Loader />;
   }
 
   return (
