@@ -113,10 +113,11 @@ const BranchRoomsID = ({ roomId, branchId }) => {
       ) : (
         <div className="mt-3">
           <div className="flex items-center justify-between mb-2">
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               <Button onClick={handlePreviousPage} disabled={currentPage === 1}>
                 <ChevronLeft />
               </Button>
+              {currentPage} / {totalPages}
               <Button
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}

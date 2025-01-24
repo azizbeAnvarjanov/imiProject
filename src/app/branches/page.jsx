@@ -18,12 +18,14 @@ const Branches = () => {
   );
   return (
     <div className="p-5">
-      <AddBranchModal />
-      <SearchInput
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        placeholder="Search by name..."
-      />
+      <div className="flex items-center gap-4">
+        <AddBranchModal />
+        <SearchInput
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          placeholder="Nom bo'yicha qidirish..."
+        />
+      </div>
       <div>
         <BranchesLists branches={filteredBranches} />
       </div>

@@ -20,18 +20,15 @@ const BranchDetails = () => {
     <div>
       {branch ? (
         <div className="p-5">
-          <p>{branch.name}</p>
-
-          <br />
-          <AddRoomDialog branchId={branchId} />
-          <AddWarehouseModal branchId={branchId} />
-          <br />
-          <br />
-          <BranchRooms branchId={branchId} />
-          <br />
-          <hr />
-          <br />
-          <BranchSklads branchId={branchId} />
+          <p className="font-bold text-2xl">{branch.name}</p>
+          <div className="flex items-center gap-3">
+            <AddRoomDialog branchId={branchId} />
+            <AddWarehouseModal branchId={branchId} />
+          </div>
+          <div className="flex items-start gap-5 mt-3">
+            <BranchRooms branchId={branchId} />
+            <BranchSklads branchId={branchId} />
+          </div>
         </div>
       ) : (
         <div className="w-full h-screen grid place-content-center">

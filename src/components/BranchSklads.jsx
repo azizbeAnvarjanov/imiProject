@@ -40,8 +40,8 @@ const BranchSklads = ({ branchId }) => {
   );
 
   return (
-    <div className="p-3">
-      <h2>Sklads for Branch: {branchId}</h2>
+    <div className="w-full">
+      <h2 className="text-xl mb-2">Skladlar</h2>
       <SearchInput
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}

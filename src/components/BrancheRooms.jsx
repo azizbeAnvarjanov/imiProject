@@ -37,8 +37,8 @@ const BranchRooms = ({ branchId }) => {
   );
 
   return (
-    <div>
-      <h2>Rooms</h2>
+    <div className="w-full">
+      <h2 className="text-xl mb-2">Xonalar</h2>
       <SearchInput
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
