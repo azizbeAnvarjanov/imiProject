@@ -14,6 +14,8 @@ import {
   UsersRound,
 } from "lucide-react";
 import Loader from "./Loader";
+import Diagram from "./Diagram";
+import useStatusData from "./useStatusData";
 const Statistics = () => {
   const equipments = useCollection("equipments");
   const types = useCollection("types");
@@ -197,15 +199,37 @@ const Statistics = () => {
       link: "/branches",
     },
   ];
+  const typesData = useStatusData({
+    element: "equipments",
+    field: "type",
+  });
+  const statusesData = useStatusData({
+    element: "equipments",
+    field: "status",
+  });
+  const measuresData = useStatusData({
+    element: "equipments",
+    field: "measure",
+  });
+  const tagsData = useStatusData({
+    element: "equipments",
+    field: "tag",
+  });
 
   return (
     <div className="flex flex-wrap items-start justify-start rounded-md h-fit gap-3">
-      <TotalPriceCalculator />
-      {cards.map((item, idx) => (
-        <div key={idx}>
-          <CardNew item={item} />
-        </div>
-      ))}
+      <Diagram data={typesData} />
+      <Diagram data={statusesData} />
+      <Diagram data={measuresData} />
+      <Diagram data={tagsData} />
+      <div className="flex flex-wrap items-start justify-start rounded-md h-fit gap-3">
+        <TotalPriceCalculator />
+        {cards.map((item, idx) => (
+          <div key={idx}>
+            <CardNew item={item} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -10,7 +10,6 @@ const TotalPriceCalculator = () => {
   const [loading, setLoading] = useState(false);
   const equipments = useCollection("equipments");
 
-  console.log(equipments);
 
   useEffect(() => {
     if (equipments && equipments.length > 0) {

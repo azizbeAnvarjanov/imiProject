@@ -4,12 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useCollection from "../components/useCollection";
 import TotalPriceCalculator from "@/components/TotalPriceCalculator";
 import CardNew from "@/components/Card";
+import useStatusData from "@/components/useStatusData";
+import useTagsData from "@/components/useTagsData";
 
 import DynamicTagCounter from "@/components/DynamicTagCounter";
-import DynamicTypeCounter from "@/components/DynamicTypeCounter";
+
 import DynamicStatusCounter from "@/components/DynamicStatusCounter";
 import Statistics from "@/components/Statistics";
 const Dashboard = () => {
+
+
   return (
     <div className="p-5">
       <Statistics />
@@ -19,7 +23,6 @@ const Dashboard = () => {
         <DynamicStatusCounter collectionName="equipments" />
       </div>
       <br />
-      <DynamicTypeCounter collectionName="equipments" />
     </div>
   );
 };
