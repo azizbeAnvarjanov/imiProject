@@ -22,6 +22,8 @@ const DynamicTypeCounter = ({ collectionName }) => {
   const [search, setSearch] = useState(""); // Filtr uchun state
   const [filteredData, setFilteredData] = useState([]);
 
+  console.log(tagsData);
+
   useEffect(() => {
     const fetchTags = async () => {
       setLoading(true);
@@ -155,7 +157,10 @@ const DynamicTypeCounter = ({ collectionName }) => {
             className="w-[400px]"
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Button onClick={handleExport}> Export <Sheet /></Button>
+          <Button onClick={handleExport}>
+            {" "}
+            Export <Sheet />
+          </Button>
         </div>
 
         {/* Yumaloq diagramma */}
