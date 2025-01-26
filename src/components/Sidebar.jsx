@@ -10,8 +10,11 @@ import {
   Settings,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import GetUserFS from "./GetUserFS";
+import SidebarLinks from "@/components/SidebarLinks";
 
 const AdminSidebar = async () => {
+  const user = await GetUserFS();
   return (
     <div>
       <div className="border-r bg-white fixed left-0 top-0 h-screen w-[35vh] p-4">
@@ -31,41 +34,7 @@ const AdminSidebar = async () => {
             </Link>
           </div>
         </div>
-        <ul className="">
-          <Link
-            href="/branches"
-            className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
-          >
-            <LayoutPanelLeft size="22px" />
-            <h1 className="font-medium">Filiallar</h1>
-          </Link>
-          <Link
-            href="/all-equipments"
-            className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
-          >
-            <GalleryVerticalEnd size="22px" />
-            <h1 className="font-medium">Barcha jihozlar</h1>
-          </Link>
-
-          <Link
-            href="/sozlamalar"
-            className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
-          >
-            <Settings size="22px" />
-            <h1 className="font-medium">Sozlamalar</h1>
-          </Link>
-          <LogoutLink>
-            <Button
-              className="w-[90%] left-[50%] absolute bottom-5 -translate-x-[50%]"
-              variant="destructive"
-            >
-              <LogOut />
-              Tizimdan chiqish
-            </Button>{" "}
-          </LogoutLink>
-          <br />
-          {/* {user ? <>{user.uid}</>:<>n</>} */}
-        </ul>
+        <SidebarLinks user={user} />
       </div>
     </div>
   );
