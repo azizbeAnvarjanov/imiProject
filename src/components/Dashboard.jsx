@@ -18,10 +18,10 @@ const Dashboard = () => {
     <div className="p-5">
       <Statistics />
       <br />
-      <div className="flex gap-3">
+      {/* <div className="flex gap-3">
         <DynamicTagCounter collectionName="equipments" />
         <DynamicStatusCounter collectionName="equipments" />
-      </div>
+      </div> */}
       <br />
     </div>
   );

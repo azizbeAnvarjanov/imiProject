@@ -49,21 +49,21 @@ const EditEquipmentDialog = ({ equipmentId }) => {
   const handleSubmit = async () => {
     setLoading(true);
     // Tekshirish: majburiy maydonlar to'ldirilgan bo'lishi kerak
-    if (
-      !equipmentData.name ||
-      !equipmentData.quantity ||
-      !equipmentData.location ||
-      !equipmentData.measure ||
-      !equipmentData.type ||
-      !equipmentData.status ||
-      !equipmentData.unitPrice ||
-      !equipmentData.deliverer ||
-      !equipmentData.receiver
-    ) {
-      setLoading(false);
-      alert("All mandatory fields must be filled");
-      return;
-    }
+    // if (
+    //   !equipmentData.name ||
+    //   !equipmentData.quantity ||
+    //   !equipmentData.location ||
+    //   !equipmentData.measure ||
+    //   !equipmentData.type ||
+    //   !equipmentData.status ||
+    //   !equipmentData.unitPrice ||
+    //   !equipmentData.deliverer ||
+    //   !equipmentData.receiver
+    // ) {
+    //   setLoading(false);
+    //   alert("All mandatory fields must be filled");
+    //   return;
+    // }
 
     // `unitPrice` va `quantity`ni sonli qiymatga o'tkazish
     const unitPrice = Number(equipmentData.unitPrice);

@@ -14,8 +14,8 @@ import {
   UsersRound,
 } from "lucide-react";
 import Loader from "./Loader";
-import Diagram from "./Diagram";
 import useStatusData from "./useStatusData";
+import Diagram from "./Diagram";
 const Statistics = () => {
   const equipments = useCollection("equipments");
   const types = useCollection("types");
@@ -217,19 +217,21 @@ const Statistics = () => {
   });
 
   return (
-    <div className="flex flex-wrap items-start justify-start rounded-md h-fit gap-3">
-      <Diagram data={typesData} text="Jihoz turlari" />
-      <Diagram data={statusesData}  text="Jihoz statuslar"/>
-      <Diagram data={measuresData}  text="Jihoz o'lchovbirliglari"/>
-      <Diagram data={tagsData}  text="Jihoz taglari"/>
+    <div className="">
       <div className="flex flex-wrap items-start justify-start rounded-md h-fit gap-3">
         <TotalPriceCalculator />
-        {/* {cards.map((item, idx) => (
+      </div>
+      <div className="grid grid-cols-3 gap-3 my-3">
+        <Diagram data={typesData} text="Jihoz turlari" />
+        <Diagram data={statusesData} text="Jihoz statuslar" />
+        <Diagram data={measuresData} text="Jihoz o'lchovbirliglari" />
+        <Diagram data={tagsData} text="Jihoz taglari" />
+      </div>
+      {/* {cards.map((item, idx) => (
           <div key={idx}>
             <CardNew item={item} />
           </div>
         ))} */}
-      </div>
     </div>
   );
 };
