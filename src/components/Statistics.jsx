@@ -218,17 +218,17 @@ const Statistics = () => {
 
   return (
     <div className="flex flex-wrap items-start justify-start rounded-md h-fit gap-3">
-      <Diagram data={typesData} />
-      <Diagram data={statusesData} />
-      <Diagram data={measuresData} />
-      <Diagram data={tagsData} />
+      <Diagram data={typesData} text="Jihoz turlari" />
+      <Diagram data={statusesData}  text="Jihoz statuslar"/>
+      <Diagram data={measuresData}  text="Jihoz o'lchovbirliglari"/>
+      <Diagram data={tagsData}  text="Jihoz taglari"/>
       <div className="flex flex-wrap items-start justify-start rounded-md h-fit gap-3">
         <TotalPriceCalculator />
-        {cards.map((item, idx) => (
+        {/* {cards.map((item, idx) => (
           <div key={idx}>
             <CardNew item={item} />
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

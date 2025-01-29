@@ -47,7 +47,6 @@ const chartConfig = {
 } satisfies ChartConfig
 
 
-import useTagsData from '@/components/useTagsData'
 
 
 
@@ -60,11 +59,15 @@ interface TagData {
 }
 
 
-function Diagram({ data }: { data?: TagData[] }) {
+function Diagram({ data, text }: { data?: TagData[], text?: string }) {
 
   const totalVisitors = React.useMemo(() => {
     return data?.reduce((acc, curr) => acc + curr.count, 0)
   }, [data])
+
+
+  console.log(data);
+
 
 
 
@@ -73,8 +76,7 @@ function Diagram({ data }: { data?: TagData[] }) {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Pie Chart - Donut with Text</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>{text}</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -109,14 +111,13 @@ function Diagram({ data }: { data?: TagData[] }) {
                           y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          {totalVisitors?.toLocaleString()}
                         </tspan>
+                        
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Jihozlar soni - {data?.length || 0}
                         </tspan>
                       </text>
                     )
