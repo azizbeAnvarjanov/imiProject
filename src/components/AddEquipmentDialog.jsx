@@ -41,7 +41,8 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
   const statuses = useCollection("statuses");
   const tags = useCollection("tags");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
     if (
       !name ||
@@ -107,7 +108,7 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
       </Button>
       <DialogContent>
         <DialogTitle>Add New Equipment</DialogTitle>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <Label className="my-2 flex">Jihoz nomi:</Label>
             <Input
@@ -221,7 +222,7 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
           </div>
           <br />
 
-          <Button type="button" className="mr-2" onClick={handleSubmit}>
+          <Button type="submit" className="mr-2">
             Qo'shish
           </Button>
           <Button variant="destructive" onClick={() => setIsOpen(false)}>

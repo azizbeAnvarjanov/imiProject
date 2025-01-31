@@ -9,9 +9,7 @@ import useCollection from "./useCollection";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
 import ChangeLocationDialog from "./ChangeLocationDialog";
 import QRCodeGenerator from "./QRCodeGenerator";
-{
-  /* <ChangeLocationDialog equipmentId={equipmentId} /> */
-}
+
 const EquipmentDetails = ({ equipmentId }) => {
   const equipment = useDocument("equipments", equipmentId); // Jihozni olish uchun hook
   const [formData, setFormData] = useState({
@@ -78,144 +76,148 @@ const EquipmentDetails = ({ equipmentId }) => {
         equipmentName={formData.name}
       />
 
-      <div className="mb-4">
-        <Label
-          htmlFor="equipmentName"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Jihoz Nomi
-        </Label>
-        <Input
-          type="text"
-          id="equipmentName"
-          value={formData.name}
-          onChange={(e) => handleInputChange("name", e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-      </div>
+      <div className="grid grid-cols-4 items-start gap-3 mt-3">
+        <div className="mb-4">
+          <Label
+            htmlFor="equipmentName"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Jihoz Nomi
+          </Label>
+          <Input
+            type="text"
+            id="equipmentName"
+            value={formData.name}
+            onChange={(e) => handleInputChange("name", e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
 
-      <div className="mb-4">
-        <Label
-          htmlFor="inventoryNumber"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Jihoz Inventar Raqami
-        </Label>
-        <Input
-          type="text"
-          id="inventoryNumber"
-          value={formData.inventoryNumber}
-          onChange={(e) => handleInputChange("inventoryNumber", e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-      </div>
+        <div className="mb-4">
+          <Label
+            htmlFor="inventoryNumber"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Jihoz Inventar Raqami
+          </Label>
+          <Input
+            type="text"
+            id="inventoryNumber"
+            value={formData.inventoryNumber}
+            onChange={(e) =>
+              handleInputChange("inventoryNumber", e.target.value)
+            }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
 
-      <div>
-        <Label className="my-2 flex">Jihoz turi:</Label>
-        <Select
-          value={formData.type}
-          onValueChange={(value) => handleInputChange("type", value)}
-        >
-          <SelectTrigger className="w-full">
-            {formData.type || "Tanlang"}
-          </SelectTrigger>
-          <SelectContent>
-            {types?.map((type, idx) => (
-              <SelectItem key={idx} value={type.name}>
-                {type.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+        <div>
+          <Label className="my-2 flex">Jihoz turi:</Label>
+          <Select
+            value={formData.type}
+            onValueChange={(value) => handleInputChange("type", value)}
+          >
+            <SelectTrigger className="w-full">
+              {formData.type || "Tanlang"}
+            </SelectTrigger>
+            <SelectContent>
+              {types?.map((type, idx) => (
+                <SelectItem key={idx} value={type.name}>
+                  {type.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div>
-        <Label className="my-2 flex">Jihoz tag:</Label>
-        <Select
-          value={formData.tag}
-          onValueChange={(value) => handleInputChange("tag", value)}
-        >
-          <SelectTrigger className="w-full">
-            {formData.tag || "Tanlang"}
-          </SelectTrigger>
-          <SelectContent>
-            {tags?.map((tag, idx) => (
-              <SelectItem key={idx} value={tag.name}>
-                {tag.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      <div>
-        <Label className="my-2 flex">Jihoz status:</Label>
-        <Select
-          value={formData.status}
-          onValueChange={(value) => handleInputChange("status", value)}
-        >
-          <SelectTrigger className="w-full">
-            {formData.status || "Tanlang"}
-          </SelectTrigger>
-          <SelectContent>
-            {statuses?.map((status, idx) => (
-              <SelectItem key={idx} value={status.name}>
-                {status.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      <div>
-        <Label className="my-2 flex">Jihoz o'lchov birligi:</Label>
-        <Select
-          value={formData.measure}
-          onValueChange={(value) => handleInputChange("measure", value)}
-        >
-          <SelectTrigger className="w-full">
-            {formData.measure || "Tanlang"}
-          </SelectTrigger>
-          <SelectContent>
-            {measures?.map((measure, idx) => (
-              <SelectItem key={idx} value={measure.name}>
-                {measure.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+        <div>
+          <Label className="my-2 flex">Jihoz tag:</Label>
+          <Select
+            value={formData.tag}
+            onValueChange={(value) => handleInputChange("tag", value)}
+          >
+            <SelectTrigger className="w-full">
+              {formData.tag || "Tanlang"}
+            </SelectTrigger>
+            <SelectContent>
+              {tags?.map((tag, idx) => (
+                <SelectItem key={idx} value={tag.name}>
+                  {tag.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label className="my-2 flex">Jihoz status:</Label>
+          <Select
+            value={formData.status}
+            onValueChange={(value) => handleInputChange("status", value)}
+          >
+            <SelectTrigger className="w-full">
+              {formData.status || "Tanlang"}
+            </SelectTrigger>
+            <SelectContent>
+              {statuses?.map((status, idx) => (
+                <SelectItem key={idx} value={status.name}>
+                  {status.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label className="my-2 flex">Jihoz o'lchov birligi:</Label>
+          <Select
+            value={formData.measure}
+            onValueChange={(value) => handleInputChange("measure", value)}
+          >
+            <SelectTrigger className="w-full">
+              {formData.measure || "Tanlang"}
+            </SelectTrigger>
+            <SelectContent>
+              {measures?.map((measure, idx) => (
+                <SelectItem key={idx} value={measure.name}>
+                  {measure.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div>
-        <Label className="my-2 flex">Narxi (1 dona):</Label>
-        <Input
-          type="number"
-          value={formData.unitPrice}
-          onChange={(e) =>
-            handleInputChange("unitPrice", parseFloat(e.target.value) || 0)
-          }
-          className="mt-1 block w-full"
-        />
-      </div>
+        <div>
+          <Label className="my-2 flex">Narxi (1 dona):</Label>
+          <Input
+            type="number"
+            value={formData.unitPrice}
+            onChange={(e) =>
+              handleInputChange("unitPrice", parseFloat(e.target.value) || 0)
+            }
+            className="mt-1 block w-full"
+          />
+        </div>
 
-      <div>
-        <Label className="my-2 flex">Soni:</Label>
-        <Input
-          type="number"
-          value={formData.quantity}
-          onChange={(e) =>
-            handleInputChange("quantity", parseInt(e.target.value) || 0)
-          }
-          className="mt-1 block w-full"
-        />
-      </div>
+        <div>
+          <Label className="my-2 flex">Soni:</Label>
+          <Input
+            type="number"
+            value={formData.quantity}
+            onChange={(e) =>
+              handleInputChange("quantity", parseInt(e.target.value) || 0)
+            }
+            className="mt-1 block w-full"
+          />
+        </div>
 
-      <div>
-        <Label className="my-2 flex">Umumiy narxi:</Label>
-        <Input
-          type="text"
-          value={formData.totalPrice?.toLocaleString()} // Faqat o'qish uchun
-          disabled
-          className="mt-1 block w-full"
-        />
+        <div>
+          <Label className="my-2 flex">Umumiy narxi:</Label>
+          <Input
+            type="text"
+            value={formData.totalPrice?.toLocaleString()} // Faqat o'qish uchun
+            disabled
+            className="mt-1 block w-full"
+          />
+        </div>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import {
   query,
   where,
   onSnapshot,
+  orderBy,
 } from "firebase/firestore";
 import Link from "next/link";
 import {
@@ -44,11 +45,11 @@ const BranchRoomsID = ({ roomId, branchId }) => {
   const [itemsPerPage, setItemsPerPage] = useState("20"); // Default number of items per page
   const db = getFirestore(); // Initialize Firestore
   const [searchTerm, setSearchTerm] = useState("");
-
   useEffect(() => {
     const q = query(
       collection(db, "equipments"),
-      where("location", "==", roomId)
+      where("location", "==", roomId),
+      orderBy("createdAt", "desc") // Yangi qo'shilganlarni tepaga chiqarish
     );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -59,8 +60,7 @@ const BranchRoomsID = ({ roomId, branchId }) => {
       setEquipments(roomsData);
     });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
+    return () => unsubscribe(); // Cleanup on unmount
   }, [roomId, db]);
 
   // Filtrlash funksiyasi
