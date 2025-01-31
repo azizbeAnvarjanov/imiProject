@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  updateDoc,
-  getDocs,
-  collection,
-} from "firebase/firestore";
+import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
+import TagsSelect from "@/components/TagsSelect";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
@@ -20,10 +14,10 @@ const EditEquipmentDialog = ({ equipmentId }) => {
   const [equipmentData, setEquipmentData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [type, setType] = useState("");
+  const [changedTag, setChangedTag] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
 
   const db = getFirestore();
-
   const users = useCollection("users");
   const measures = useCollection("measures");
   const types = useCollection("types");
@@ -36,6 +30,8 @@ const EditEquipmentDialog = ({ equipmentId }) => {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setEquipmentData(docSnap.data());
+        setChangedTag(docSnap.data().tag); // Tagni to'g'ridan-to'g'ri olish
+        setCreatedAt(docSnap.data().createdAt); // Sana o'zgarmasligi uchun saqlash
       }
     };
 
@@ -48,24 +44,7 @@ const EditEquipmentDialog = ({ equipmentId }) => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    // Tekshirish: majburiy maydonlar to'ldirilgan bo'lishi kerak
-    // if (
-    //   !equipmentData.name ||
-    //   !equipmentData.quantity ||
-    //   !equipmentData.location ||
-    //   !equipmentData.measure ||
-    //   !equipmentData.type ||
-    //   !equipmentData.status ||
-    //   !equipmentData.unitPrice ||
-    //   !equipmentData.deliverer ||
-    //   !equipmentData.receiver
-    // ) {
-    //   setLoading(false);
-    //   alert("All mandatory fields must be filled");
-    //   return;
-    // }
 
-    // `unitPrice` va `quantity`ni sonli qiymatga o'tkazish
     const unitPrice = Number(equipmentData.unitPrice);
     const quantity = Number(equipmentData.quantity);
 
@@ -79,11 +58,18 @@ const EditEquipmentDialog = ({ equipmentId }) => {
     try {
       const docRef = doc(db, "equipments", equipmentId);
       await updateDoc(docRef, {
-        ...equipmentData,
+        name: equipmentData.name,
+        inventoryNumber: equipmentData.inventoryNumber || "",
+        quantity,
+        unitPrice,
+        totalPrice,
+        type: equipmentData.type,
+        measure: equipmentData.measure,
+        status: equipmentData.status,
+        deliverer: equipmentData.deliverer,
+        receiver: equipmentData.receiver,
         qrCode: equipmentData?.qrCode,
-        unitPrice, // Number turida saqlanadi
-        quantity, // Number turida saqlanadi
-        totalPrice, // Hisoblangan qiymat
+        tag: changedTag, // Yangilangan tagni saqlash
       });
 
       toast.success("Equipment updated successfully!");
@@ -96,7 +82,7 @@ const EditEquipmentDialog = ({ equipmentId }) => {
   };
 
   if (!equipmentData) {
-    return null; // Or a loader if desired
+    return null;
   }
 
   return (
@@ -106,6 +92,7 @@ const EditEquipmentDialog = ({ equipmentId }) => {
       </Button>
       <DialogContent>
         <DialogTitle>Edit Equipment</DialogTitle>
+
         <div>
           <Label className="my-2 flex">Jihoz nomi:</Label>
           <Input
@@ -146,6 +133,7 @@ const EditEquipmentDialog = ({ equipmentId }) => {
             required
           />
         </div>
+
         <div className="grid grid-cols-2 gap-2">
           <div>
             <Label className="my-2 flex">Jihoz turi:</Label>
@@ -183,8 +171,9 @@ const EditEquipmentDialog = ({ equipmentId }) => {
               </SelectContent>
             </Select>
           </div>
+
           <div>
-            <Label className="my-2 flex">Jihoz holati:</Label>
+            <Label className="my-2 flex">Holati:</Label>
             <Select
               onValueChange={(value) => handleInputChange("status", value)}
               value={equipmentData.status}
@@ -202,22 +191,7 @@ const EditEquipmentDialog = ({ equipmentId }) => {
             </Select>
           </div>
           <div>
-            <Label className="my-2 flex">Jihoz tag:</Label>
-            <Select
-              onValueChange={(value) => handleInputChange("tag", value)}
-              value={equipmentData.tag || ""}
-            >
-              <SelectTrigger className="w-full">
-                {equipmentData.tag}
-              </SelectTrigger>
-              <SelectContent>
-                {tags?.map((tag, idx) => (
-                  <SelectItem key={idx} value={tag?.name}>
-                    {tag?.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <TagsSelect tags={tags} setTag={setChangedTag} />
           </div>
           <div>
             <Label className="my-2 flex">Topshiruvchi:</Label>
@@ -240,6 +214,7 @@ const EditEquipmentDialog = ({ equipmentId }) => {
               </SelectContent>
             </Select>
           </div>
+
           <div>
             <Label className="my-2 flex">Qabul qiluvchi:</Label>
             <Select
@@ -262,6 +237,7 @@ const EditEquipmentDialog = ({ equipmentId }) => {
             </Select>
           </div>
         </div>
+
         <div className="flex">
           <Button
             type="button"

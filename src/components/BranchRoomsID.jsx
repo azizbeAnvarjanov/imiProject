@@ -185,6 +185,9 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                     Holati
                   </TableCell>
                   <TableCell className="bg-gray-500 text-white font-bold">
+                    Tag
+                  </TableCell>
+                  <TableCell className="bg-gray-500 text-white font-bold">
                     O'lchov birligi
                   </TableCell>
                   <TableCell className="bg-gray-500 text-white font-bold">
@@ -230,6 +233,9 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                     </TableCell>
                     <TableCell className="border p-2">
                       {user.status || "Ma'lumot yo'q"}
+                    </TableCell>
+                    <TableCell className="border p-2">
+                      {user.tag || "Ma'lumot yo'q"}
                     </TableCell>
                     <TableCell className="border p-2">
                       {user.measure || "Ma'lumot yo'q"}
