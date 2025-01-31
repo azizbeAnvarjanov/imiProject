@@ -13,14 +13,14 @@ import {
 import { Button } from "@/components/ui/button"; // Shadcn UI button komponenti
 import { Trash } from "lucide-react";
 
-const DeleteDialog = ({ id, name }) => {
+const DeleteDialog = ({ id, name, path }) => {
   const db = getFirestore(); // Firestore ulanishi
 
   const handleDelete = async () => {
     if (!id) return;
 
     try {
-      const equipmentRef = doc(db, "equipments", id);
+      const equipmentRef = doc(db, path, id);
       await deleteDoc(equipmentRef); // Jihozni Firestore'dan o'chirish
       toast.success(`Muvaffaqiyatli o'chirildi!`);
     } catch (error) {

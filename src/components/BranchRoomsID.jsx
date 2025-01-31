@@ -261,7 +261,11 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                           <SquareArrowOutUpRight />
                         </Button>
                       </Link>
-                      <DeleteDialog id={user.id} name={user.name} />
+                      <DeleteDialog
+                        id={user.id}
+                        name={user.name}
+                        path="equipments"
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

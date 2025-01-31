@@ -1,8 +1,6 @@
 import checkUserInDatabase from "../components/checkUserInDatabase";
 import GetUserFc from "../components/GetUserFS";
 import GetRoles from "../components/GetRoles";
-import Dashboard from "../components/Dashboard";
-
 
 export default async function Home() {
   const user = await GetUserFc();
@@ -10,8 +8,9 @@ export default async function Home() {
   checkUserInDatabase(user, role);
 
   return (
-    <>
-      <Dashboard />
-    </>
+    <div className="p-5">
+      Salom - {user?.family_name} {user?.given_name}
+      {/* <Dashboard /> */}
+    </div>
   );
 }

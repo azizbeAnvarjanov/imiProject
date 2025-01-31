@@ -6,6 +6,7 @@ import { Label, Pie, PieChart } from "recharts";
 import {
   Card,
   CardContent,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -138,6 +139,15 @@ function TagsDiagram({ data, text }: { data?: TagData[], text?: string }) {
             </PieChart>
           </ChartContainer>
         </CardContent>
+        <CardFooter>
+          {/* Telegramga jo‘natish tugmasi */}
+          <div className="p-4 mx-auto">
+            <Button onClick={sendToTelegram} className="w-full">
+              📩 Telegramga yuborish
+            </Button>
+            {status && <p className="mt-2 text-sm">{status}</p>}
+          </div>
+        </CardFooter>
       </Card>
 
       {/* Diagramma ma'lumotlar ro‘yxati */}
@@ -156,13 +166,7 @@ function TagsDiagram({ data, text }: { data?: TagData[], text?: string }) {
         ))}
       </div>
 
-      {/* Telegramga jo‘natish tugmasi */}
-      <div className="p-4">
-        <Button onClick={sendToTelegram} className="w-full">
-          📩 Telegramga yuborish
-        </Button>
-        {status && <p className="mt-2 text-sm">{status}</p>}
-      </div>
+
     </div>
   );
 }

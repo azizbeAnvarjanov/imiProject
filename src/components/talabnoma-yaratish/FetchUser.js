@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { db } from "@/app/firebase";
 
 const FetchUser = (kindeId) => {
   const [user, setUser] = useState(null);
@@ -14,7 +15,6 @@ const FetchUser = (kindeId) => {
       }
 
       try {
-        const db = getFirestore();
         const userRef = doc(db, "users", kindeId); // Firebase'dagi "users" kollektsiyasidan foydalanuvchini topish
         const userSnapshot = await getDoc(userRef);
 
