@@ -19,6 +19,7 @@ import { Label } from "./ui/label";
 import useCollection from "./useCollection";
 import toast from "react-hot-toast";
 import { CircleFadingPlus } from "lucide-react";
+import TagsSelect from "@/components/TagsSelect";
 
 const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
   const [loading, setLoading] = useState(false);
@@ -186,17 +187,7 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
               </Select>
             </div>
             <div>
-              <Label className="my-2 flex">Jihoz tag:</Label>
-              <Select onValueChange={setTag} value={tag}>
-                <SelectTrigger className="w-full">{tag}</SelectTrigger>
-                <SelectContent>
-                  {tags?.map((tag, idx) => (
-                    <SelectItem key={idx} value={tag?.name}>
-                      {tag?.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <TagsSelect setTag={setTag} tag={tag} tags={tags} />
             </div>
             <div>
               <Label className="my-2 flex">Topshiruvchi:</Label>

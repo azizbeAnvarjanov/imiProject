@@ -2,16 +2,18 @@
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import {
   File,
+  FolderKanban,
   GalleryVerticalEnd,
+  LayoutDashboard,
   LayoutPanelLeft,
   LogOut,
   Settings,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { Button } from "./ui/button";
 
 import FetchUser from "./talabnoma-yaratish/FetchUser";
+import { Button } from "./ui/button";
 
 const SidebarLinks = ({ user }) => {
   const dbUser = FetchUser(user?.id);
@@ -20,9 +22,71 @@ const SidebarLinks = ({ user }) => {
   console.log(userDepartment);
   console.log(userRole);
 
-  if (userDepartment !== "Taminot") {
-    return (
-      <>
+  // if (userDepartment === "Marketing" && userRole === "Admin") {
+  //   return (
+  //     <>
+  //       <Link
+  //         href="/marketing-dashboard"
+  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+  //       >
+  //         <LayoutDashboard size="22px"/>
+  //         <h1 className="font-medium">Marketing Dashboard</h1>
+  //       </Link>
+  //       <Link
+  //         href="/marketing-projects"
+  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+  //       >
+  //         <FolderKanban size="22px"/>
+  //         <h1 className="font-medium">Loyixalar</h1>
+  //       </Link>
+  //     </>
+  //   );
+  // }
+  // if (userDepartment === "Taminot" && userRole === "Employee") {
+  //   return (
+  //     <>
+  //       <Link
+  //         href="/talabnoma-yaratish"
+  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+  //       >
+  //         <LayoutPanelLeft size="22px" />
+  //         <h1 className="font-medium">Talabnoma yaratish</h1>
+  //       </Link>
+  //       <Link
+  //         href="/mening-talabnomalarim"
+  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+  //       >
+  //         <File size="22px" />
+  //         <h1 className="font-medium">Mening talabnomalarim</h1>
+  //       </Link>
+  //     </>
+  //   );
+  // }
+  // if (userDepartment === "Taminot" && userRole === "Admin") {
+  //   return (
+  //     <>
+  //       <Link
+  //         href="/talabnoma-yaratish"
+  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+  //       >
+  //         <LayoutPanelLeft size="22px" />
+  //         <h1 className="font-medium">Taminot dashboard</h1>
+  //       </Link>
+  //     </>
+  //   );
+  // }
+  
+
+  return (
+    <div>
+      <ul className="">
+        <Link
+          href="/branches"
+          className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+        >
+          <LayoutPanelLeft size="22px" />
+          <h1 className="font-medium">Filiallar</h1>
+        </Link>
         <Link
           href="/talabnoma-yaratish"
           className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
@@ -36,20 +100,6 @@ const SidebarLinks = ({ user }) => {
         >
           <File size="22px" />
           <h1 className="font-medium">Mening talabnomalarim</h1>
-        </Link>
-      </>
-    );
-  }
-
-  return (
-    <div>
-      <ul className="">
-        <Link
-          href="/branches"
-          className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
-        >
-          <LayoutPanelLeft size="22px" />
-          <h1 className="font-medium">Filiallar</h1>
         </Link>
         <Link
           href="/all-equipments"
@@ -78,6 +128,26 @@ const SidebarLinks = ({ user }) => {
         ) : (
           <></>
         )}
+        {userDepartment === "Marketing" && userRole === "Admin" ? (
+          <>
+            <Link
+              href="/marketing-dashboard"
+              className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+            >
+              <Settings size="22px" />
+              <h1 className="font-medium">Marketing Dashboard</h1>
+            </Link>
+            <Link
+              href="/marketing-projects"
+              className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+            >
+              <Settings size="22px" />
+              <h1 className="font-medium">Loyixalar</h1>
+            </Link>
+          </>
+        ) : (
+          <></>
+        )}
 
         <Link
           href="/tasdiqlangan-talabnomalar"
@@ -97,7 +167,6 @@ const SidebarLinks = ({ user }) => {
           </Button>{" "}
         </LogoutLink>
         <br />
-        {/* {user ? <>{user.uid}</>:<>n</>} */}
       </ul>
     </div>
   );

@@ -15,6 +15,9 @@ import SidebarLinks from "@/components/SidebarLinks";
 
 const AdminSidebar = async () => {
   const user = await GetUserFS();
+  
+
+
   return (
     <div>
       <div className="border-r bg-white fixed left-0 top-0 h-screen w-[35vh] p-4">
