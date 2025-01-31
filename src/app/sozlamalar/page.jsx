@@ -198,11 +198,11 @@ const Sozlamalar = () => {
           {tags.length === 0 ? (
             <>No elements</>
           ) : (
-            <>
+            <div className="max-h-[500px] overflow-y-scroll space-y-2">
               {tags.map((element, idx) => (
-                <div key={idx}>{element.name}</div>
+                <div className="border rounded-md p-2" key={idx}>{element.name}</div>
               ))}
-            </>
+            </div>
           )}
         </div>
       </div>

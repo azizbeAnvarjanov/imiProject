@@ -35,7 +35,7 @@ const generateChartConfig = (data?: TagData[]) => {
   return config;
 };
 
-function Diagram({ data, text }: { data?: TagData[], text?: string }) {
+function TagsDiagram({ data, text }: { data?: TagData[], text?: string }) {
   React.useEffect(() => {
     // console.log("Received text:", text);
   }, [text]);
@@ -47,8 +47,8 @@ function Diagram({ data, text }: { data?: TagData[], text?: string }) {
   const chartConfig = React.useMemo(() => generateChartConfig(data), [data]);
 
   return (
-    <div className="!max-h-[400px] scrollth my-2 overflow-y-scroll shadow-sm rounded-xl">
-      <Card>
+    <div className="!max-h-[400px] scrollth my-2 overflow-y-scroll rounded-xl flex border shadow-lg">
+      <Card className="w-[30%] h-full shadow-none border-none">
         <CardHeader className="items-center pb-0">
           <CardTitle>{text}</CardTitle>
         </CardHeader>
@@ -102,20 +102,21 @@ function Diagram({ data, text }: { data?: TagData[], text?: string }) {
             </PieChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter className="flex flex-wrap gap-1 items-start justify-center">
-          {
-            data?.map((item, idx) => (
-              <div style={{ backgroundColor: item.fill }} className="text-white py-1 px-5 text-sm rounded-full" key={idx}>
-                {item.value} - {item.count}
-              </div>
-            ))
-          }
-
-
-        </CardFooter>
       </Card>
+      <div className="flex flex-wrap gap-1 p-2 w-[70%]">
+        {
+          data?.map((item, idx) => (
+            <div style={{ backgroundColor: item.fill }} className="text-white py-2 p-5 text-sm rounded-md  flex items-center justify-between gap-3 !bg-opacity-65" key={idx}>
+              {item.value}
+              <div className="w-[25px] h-[25px] grid place-content-center rounded-md bg-gray-700">
+                {item.count}
+              </div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   )
 }
 
-export default Diagram
+export default TagsDiagram

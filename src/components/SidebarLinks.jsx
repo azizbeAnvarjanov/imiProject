@@ -19,8 +19,6 @@ const SidebarLinks = ({ user }) => {
   const dbUser = FetchUser(user?.id);
   const userDepartment = dbUser?.department;
   const userRole = dbUser?.role;
-  console.log(userDepartment);
-  console.log(userRole);
 
   // if (userDepartment === "Marketing" && userRole === "Admin") {
   //   return (
