@@ -16,10 +16,6 @@ export default async function checkUserInDatabase(user, role) {
       const userRef = collection(db, "users");
       const q = query(userRef, where("email", "==", user.email));
       const querySnapshot = await getDocs(q);
-      const workSchedule = {
-        defaultEndTime: "17:00",
-        defaultStartTime: "08:00",
-      };
 
       if (querySnapshot.empty) {
         // Agar foydalanuvchi bazada mavjud bo‘lmasa, yangi foydalanuvchi qo‘shish
@@ -30,7 +26,6 @@ export default async function checkUserInDatabase(user, role) {
           email: user.email, // Kinde’dan olingan foydalanuvchi emaili
           createdAt: new Date(),
           role: role ? role[0]?.name : "Employee",
-          workSchedule,
         };
 
         // Foydalanuvchi ma'lumotlarini Firestore’ga qo‘shish

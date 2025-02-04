@@ -6,7 +6,6 @@ import Dashboard from "@/components/Dashboard";
 export default async function AXODASHBOARD() {
   const user = await GetUserFc();
   const role = await GetRoles();
-  checkUserInDatabase(user, role);
 
   return (
     <>
