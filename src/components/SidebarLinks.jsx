@@ -4,9 +4,6 @@ import {
   CalendarCheck,
   CheckCheck,
   File,
-  FolderKanban,
-  GalleryVerticalEnd,
-  LayoutDashboard,
   LayoutList,
   LayoutPanelLeft,
   LogOut,
@@ -24,59 +21,7 @@ const SidebarLinks = ({ user }) => {
   const userDepartment = dbUser?.department;
   const userRole = dbUser?.role;
 
-  // if (userDepartment === "Marketing" && userRole === "Admin") {
-  //   return (
-  //     <>
-  //       <Link
-  //         href="/marketing-dashboard"
-  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
-  //       >
-  //         <LayoutDashboard size="22px"/>
-  //         <h1 className="font-medium">Marketing Dashboard</h1>
-  //       </Link>
-  //       <Link
-  //         href="/marketing-projects"
-  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
-  //       >
-  //         <FolderKanban size="22px"/>
-  //         <h1 className="font-medium">Loyixalar</h1>
-  //       </Link>
-  //     </>
-  //   );
-  // }
-  // if (userDepartment === "Taminot" && userRole === "Employee") {
-  //   return (
-  //     <>
-  //       <Link
-  //         href="/talabnoma-yaratish"
-  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
-  //       >
-  //         <LayoutPanelLeft size="22px" />
-  //         <h1 className="font-medium">Talabnoma yaratish</h1>
-  //       </Link>
-  //       <Link
-  //         href="/mening-talabnomalarim"
-  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
-  //       >
-  //         <File size="22px" />
-  //         <h1 className="font-medium">Mening talabnomalarim</h1>
-  //       </Link>
-  //     </>
-  //   );
-  // }
-  // if (userDepartment === "Taminot" && userRole === "Admin") {
-  //   return (
-  //     <>
-  //       <Link
-  //         href="/talabnoma-yaratish"
-  //         className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
-  //       >
-  //         <LayoutPanelLeft size="22px" />
-  //         <h1 className="font-medium">Taminot dashboard</h1>
-  //       </Link>
-  //     </>
-  //   );
-  // }
+ 
 
   return (
     <div>
@@ -151,7 +96,7 @@ const SidebarLinks = ({ user }) => {
               className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
             >
               <CheckCheck size="22px" />
-              <h1 className="font-medium">Ishlarni taaqsimlash</h1>
+              <h1 className="font-medium">Ishlarni taqsimlash</h1>
             </Link>
             <Link
               href="/talabnoma-yaratish"
@@ -238,7 +183,7 @@ const SidebarLinks = ({ user }) => {
               className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
             >
               <CheckCheck size="22px" />
-              <h1 className="font-medium">Ishlarni taaqsimlash</h1>
+              <h1 className="font-medium">Ishlarni taqsimlash</h1>
             </Link>
             <Link
               href="/talabnoma-yaratish"
@@ -258,6 +203,15 @@ const SidebarLinks = ({ user }) => {
         ) : (
           <></>
         )}
+        
+
+        <Link
+          href="/mening-ishlarim"
+          className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+        >
+          <CalendarCheck size="22px" />
+          <h1 className="font-medium">Mening ishlarim</h1>
+        </Link>
 
         {/* <Link
           href="/tasdiqlangan-talabnomalar"

@@ -5,7 +5,6 @@ import GetRoles from "../components/GetRoles";
 export default async function Home() {
   const user = await GetUserFc();
   const role = await GetRoles();
-  checkUserInDatabase(user, role);
 
   return (
     <div className="p-5">
