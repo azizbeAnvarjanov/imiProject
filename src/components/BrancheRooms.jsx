@@ -9,6 +9,7 @@ import {
 import Link from "next/link";
 import SearchInput from "./SearchInput";
 
+import EditNameDialog from "@/components/EditElementDialog";
 const BranchRooms = ({ branchId }) => {
   const [rooms, setRooms] = useState([]);
   const db = getFirestore(); // Initialize Firestore
@@ -47,9 +48,9 @@ const BranchRooms = ({ branchId }) => {
       <ul className="flex gap-4 my-5 flex-wrap">
         {filteredRooms.map((room) => (
           <Link
+            key={room.id}
             href={`/branches/${branchId}/room/${room.id}`}
             className="border py-2 px-5 rounded-xl shadow-md"
-            key={room.id}
           >
             {room.name}
           </Link>

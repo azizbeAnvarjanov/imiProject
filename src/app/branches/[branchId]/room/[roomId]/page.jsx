@@ -1,11 +1,12 @@
 "use client";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import useDocument from "@/components/useDocument";
 import AddEquipmentDialog from "@/components/AddEquipmentDialog";
 import ImportingEquipmentExcel from "@/components/ImportingEquipmentExcel";
 
 import BranchRoomsID from "@/components/BranchRoomsID";
+import EditNameDialog from "@/components/EditElementDialog";
 
 const RoomDetails = () => {
   const params = useParams();
@@ -13,11 +14,21 @@ const RoomDetails = () => {
   const branchId = params.branchId;
   const currentRoom = useDocument("rooms", roomId);
   const branch = useDocument("branches", branchId);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   return (
     <div className="p-5">
       <div className="flex items-center justify-between mb-3">
-        <h1 className="font-bold text-2xl">
-          {branch?.name} - {currentRoom?.name}
+        <h1 className="font-bold text-2xl flex gap-2">
+          {branch?.name} - {currentRoom?.name} 
+          <EditNameDialog
+            id={roomId}
+            currentName={currentRoom?.name}
+            collectionName="rooms"
+            open={dialogOpen}
+            onClose={() => setDialogOpen(false)}
+            onOpen={() => setDialogOpen(true)}
+          />
         </h1>
         <div className="flex gap-3">
           <AddEquipmentDialog

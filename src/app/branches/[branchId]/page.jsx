@@ -16,6 +16,8 @@ const BranchDetails = () => {
   const wareHouses = useCollection("wareHouses");
   const rooms = useCollection("rooms");
 
+  
+
   return (
     <div>
       {branch ? (
