@@ -44,7 +44,7 @@ const BranchRooms = ({ branchId }) => {
         setSearchTerm={setSearchTerm}
         placeholder="Search by name..."
       />
-      <ul className="flex gap-4 my-5">
+      <ul className="flex gap-4 my-5 flex-wrap">
         {filteredRooms.map((room) => (
           <Link
             href={`/branches/${branchId}/room/${room.id}`}

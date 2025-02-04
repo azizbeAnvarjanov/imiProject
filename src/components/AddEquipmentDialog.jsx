@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  getDocs,
+} from "firebase/firestore";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Fuse from "fuse.js";
 import {
   Select,
   SelectContent,
@@ -34,6 +40,9 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
   const [unitPrice, setUnitPrice] = useState("");
   const [deliverer, setDeliverer] = useState("");
   const [receiver, setReceiver] = useState("");
+
+  const [suggestion, setSuggestion] = useState("");
+  const [equipmentNames, setEquipmentNames] = useState([]);
 
   const users = useCollection("users");
   const measures = useCollection("measures");
@@ -101,6 +110,35 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchEquipments = async () => {
+      const querySnapshot = await getDocs(collection(db, "equipments"));
+      const names = querySnapshot.docs.map((doc) => doc.data().name);
+      setEquipmentNames(names);
+    };
+    fetchEquipments();
+  }, []);
+
+  useEffect(() => {
+    if (name.length > 0) {
+      const fuse = new Fuse(equipmentNames, { threshold: 0.3 });
+      const result = fuse.search(name);
+      setSuggestion(result.length > 0 ? result[0].item : "");
+    } else {
+      setSuggestion("");
+    }
+  }, [name, equipmentNames]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Tab" && suggestion) {
+      e.preventDefault();
+      setName(suggestion);
+      setSuggestion("");
+    }
+  };
+
+
+
   return (
     <Dialog open={isOpen}>
       <Button onClick={() => setIsOpen(true)}>
@@ -111,12 +149,20 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
         <form onSubmit={handleSubmit}>
           <div>
             <Label className="my-2 flex">Jihoz nomi:</Label>
-            <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter equipment name"
-              required
-            />
+            <div className="relative">
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Enter equipment name"
+                required
+              />
+              {suggestion && name && suggestion !== name && (
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 text-sm">
+                  {suggestion}
+                </div>
+              )}
+            </div>
           </div>
           <div>
             <Label className="my-2 flex">Invertar raqami:</Label>
