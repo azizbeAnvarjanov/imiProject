@@ -1,6 +1,13 @@
 "use client";
 import { useState } from "react";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "@/app/firebase";
 import {
   Dialog,
@@ -11,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CircleFadingPlus, FolderPen, Pen } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 const EditNameDialog = ({
   id,
@@ -30,6 +38,21 @@ const EditNameDialog = ({
     try {
       const docRef = doc(db, collectionName, id);
       await updateDoc(docRef, { name: newName });
+
+      // 2. Equipments collectionidan ushbu xonaga tegishli jihozlarni olish
+      const equipmentsRef = collection(db, "equipments");
+      const q = query(equipmentsRef, where("location", "==", id));
+      const querySnapshot = await getDocs(q);
+
+      // 3. Jihozlarning roomName qiymatini yangilash
+      const updatePromises = querySnapshot.docs.map(async (docSnap) => {
+        const equipmentRef = doc(db, "equipments", docSnap.id);
+        return updateDoc(equipmentRef, { roomName: newName });
+      });
+
+      await Promise.all(updatePromises);
+      toast.success("Muvafaqiyatli yangilandi");
+
       onClose();
     } catch (error) {
       console.error("Error updating name: ", error);
