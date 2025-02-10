@@ -17,8 +17,6 @@ import {
 } from "@/components/ui/chart";
 import { Button } from "@/components/ui/button"; // Tugma uchun
 import * as XLSX from "xlsx";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 interface TagData {
   count: number;
   value: string;
@@ -124,38 +122,6 @@ function TagsDiagram({ data, text }: { data?: TagData[], text?: string }) {
     setStatus("✅ Excel fayl muvaffaqiyatli yuklab olindi!");
   };
 
-  const downloadPDF = () => {
-    if (!data || data.length === 0) {
-      setStatus("❌ Ma'lumot yo‘q!");
-      return;
-    }
-
-    const doc = new jsPDF();
-
-    // PDF sarlavha qo'shish
-    doc.setFontSize(18);
-    doc.text(text || "Jihozlar Statistikasi", 14, 22);
-
-    // Jadval ma'lumotlarini tayyorlash
-    const tableColumn = ["Jihoz nomi", "Umumiy soni"];
-    const tableRows = data.map((item) => [item.value, `${item.count} ta`]);
-
-    // Jadvalni PDF faylga qo'shish
-    doc.autoTable({
-      head: [tableColumn],
-      body: tableRows,
-      startY: 30,
-    });
-
-    // Umumiy jihozlar soni qo'shish
-    doc.setFontSize(14);
-    doc.text(`📌 Umumiy jihozlar soni: ${totalItems} ta`, 14, doc.lastAutoTable.finalY + 10);
-
-    // PDF faylni yuklab olish
-    doc.save("jihozlar_statistikasi.pdf");
-
-    setStatus("✅ PDF fayl muvaffaqiyatli yuklandi!");
-  };
 
 
 
@@ -215,12 +181,11 @@ function TagsDiagram({ data, text }: { data?: TagData[], text?: string }) {
             <Button onClick={sendToTelegram} className="w-full">
               📩 Telegramga yuborish
             </Button>
+            <br /><br />
             <Button onClick={downloadExcel}>
               📥 Excelga yuklab olish
             </Button>
-            <Button onClick={downloadPDF} className="btn btn-secondary">
-              📄 PDF yuklab olish
-            </Button>
+
 
 
             {status && <p className="mt-2 text-sm">{status}</p>}
