@@ -59,6 +59,8 @@ const AllEquipments = () => {
     }
   };
 
+  console.log(filteredData);
+
   return (
     <div className="p-5 overflow-x-auto">
       <div className="flex items-center justify-between">

@@ -16,7 +16,9 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Button } from "@/components/ui/button"; // Tugma uchun
-
+import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 interface TagData {
   count: number;
   value: string;
@@ -43,50 +45,118 @@ function TagsDiagram({ data, text }: { data?: TagData[], text?: string }) {
 
   const chartConfig = React.useMemo(() => generateChartConfig(data), [data]);
 
-  // 📩 Telegramga diagramma ma'lumotlarini yuborish funksiyasi
+  const MAX_MESSAGE_LENGTH = 4096;
+
   const sendToTelegram = async () => {
     if (!data || data.length === 0) {
       setStatus("❌ Ma'lumot yo‘q!");
       return;
     }
 
-    // 📊 Diagramma statistikasi uchun matn
-    let message = `📊 *${text || "Jihozlar statistikasi"}*\n\n`;
-    let totalCount = 0;
+
+    let messageParts = [];
+    let currentMessage = `📊 *${text || "Jihozlar statistikasi"}*\n\n`;
 
     data.forEach((item) => {
-      message += `*Jihoz:* ${item.value}\n*Umumiy soni:* ${item.count} ta\n\n`;
-      totalCount += item.count;
+      const line = `*Jihoz:* ${item.value}\n*Umumiy soni:* ${item.count} ta\n\n`;
+      if ((currentMessage + line).length > MAX_MESSAGE_LENGTH) {
+        messageParts.push(currentMessage); // Avvalgi xabarni qo'shamiz
+        currentMessage = ""; // Yangi xabar boshlaymiz
+      }
+      currentMessage += line;
     });
 
-    message += `📌 *Umumiy jihozlar soni:* ${totalCount} ta`;
-
+    // Oxirgi qismni qo'shish
+    if (currentMessage.length > 0) {
+      currentMessage += `📌 *Umumiy jihozlar soni:* ${totalItems} ta`;
+      messageParts.push(currentMessage);
+    }
     // Telegram bot sozlamalari
     let token = "7856961403:AAG2SrxsZsbBY2yjiGHjwkUeghJJNL8GSd4";
     let chat_id = "-1002333419547";
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
+    // Har bir xabar qismini yuborish
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chat_id,
-          text: message,
-          parse_mode: "Markdown",
-        }),
-      });
+      for (const part of messageParts) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: chat_id,
+            text: part,
+            parse_mode: "Markdown",
+          }),
+        });
 
-      if (response.ok) {
-        setStatus("✅ Ma'lumot muvaffaqiyatli yuborildi!");
-      } else {
-        throw new Error("Telegram API xatosi");
+        if (!response.ok) {
+          throw new Error("Telegram API xatosi");
+        }
       }
+
+      setStatus("✅ Ma'lumot muvaffaqiyatli yuborildi!");
     } catch (error) {
       console.error("Xatolik:", error);
       setStatus("❌ Xatolik yuz berdi.");
     }
   };
+
+  const downloadExcel = () => {
+    if (!data || data.length === 0) {
+      setStatus("❌ Ma'lumot yo‘q!");
+      return;
+    }
+
+    // Excel uchun ma'lumotlarni tayyorlash
+    const worksheetData = data.map(item => ({
+      "Jihoz": item.value,
+      "Umumiy soni": item.count,
+    }));
+
+    // Excel varaqasi va faylini yaratish
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Jihozlar");
+
+    // Faylni yuklab olish
+    XLSX.writeFile(workbook, "Jihozlar_statistikasi.xlsx");
+
+    setStatus("✅ Excel fayl muvaffaqiyatli yuklab olindi!");
+  };
+
+  const downloadPDF = () => {
+    if (!data || data.length === 0) {
+      setStatus("❌ Ma'lumot yo‘q!");
+      return;
+    }
+
+    const doc = new jsPDF();
+
+    // PDF sarlavha qo'shish
+    doc.setFontSize(18);
+    doc.text(text || "Jihozlar Statistikasi", 14, 22);
+
+    // Jadval ma'lumotlarini tayyorlash
+    const tableColumn = ["Jihoz nomi", "Umumiy soni"];
+    const tableRows = data.map((item) => [item.value, `${item.count} ta`]);
+
+    // Jadvalni PDF faylga qo'shish
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 30,
+    });
+
+    // Umumiy jihozlar soni qo'shish
+    doc.setFontSize(14);
+    doc.text(`📌 Umumiy jihozlar soni: ${totalItems} ta`, 14, doc.lastAutoTable.finalY + 10);
+
+    // PDF faylni yuklab olish
+    doc.save("jihozlar_statistikasi.pdf");
+
+    setStatus("✅ PDF fayl muvaffaqiyatli yuklandi!");
+  };
+
 
 
   return (
@@ -145,6 +215,14 @@ function TagsDiagram({ data, text }: { data?: TagData[], text?: string }) {
             <Button onClick={sendToTelegram} className="w-full">
               📩 Telegramga yuborish
             </Button>
+            <Button onClick={downloadExcel}>
+              📥 Excelga yuklab olish
+            </Button>
+            <Button onClick={downloadPDF} className="btn btn-secondary">
+              📄 PDF yuklab olish
+            </Button>
+
+
             {status && <p className="mt-2 text-sm">{status}</p>}
           </div>
         </CardFooter>
