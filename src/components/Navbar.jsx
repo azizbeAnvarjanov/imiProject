@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import FetchUser from "./talabnoma-yaratish/FetchUser";
+import AddMoreEquipmentDialog from '@/components/AddMoreEquipmentDialog'
 
 const Navbar = ({ user }) => {
   const dbUser = FetchUser(user?.id);
@@ -11,6 +12,7 @@ const Navbar = ({ user }) => {
         <></>
       ) : (
         <div className="flex gap-5 items-center justify-end border-b bg-white z-50 p-3">
+          <AddMoreEquipmentDialog />
           {dbUser ? (
             <div className="flex items-center gap-5">
               <div className="flex items-center gap-2">

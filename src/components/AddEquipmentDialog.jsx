@@ -31,10 +31,11 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
+  const [type, setType] = useState("");
+
   const [inventoryNumber, setInventoryNumber] = useState("");
   const [quantity, setQuantity] = useState("");
   const [measure, setMeasure] = useState("");
-  const [type, setType] = useState("");
   const [tag, setTag] = useState("");
   const [status, setStatus] = useState("");
   const [unitPrice, setUnitPrice] = useState("");
@@ -72,30 +73,30 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
     try {
       await addDoc(collection(db, "equipments"), {
         name,
-        inventoryNumber: inventoryNumber || "-",
-        quantity: parseInt(quantity, 10),
-        location: roomId,
-        branchId,
-        roomName,
-        branchName,
-        measure,
         type,
+        quantity: parseInt(quantity, 10),
+        branchId,
+        branchName,
+        location: roomId,
+        roomName,
+        createdAt: serverTimestamp(),
+        inventoryNumber: inventoryNumber || "-",
+        measure,
         qrCode: null,
         tag: tag || "-",
         status,
         unitPrice: parseFloat(unitPrice),
         totalPrice,
-        createdAt: serverTimestamp(),
         deliverer,
         receiver,
       });
 
       toast.success("Equipment added successfully!");
+      setQuantity("");
       setIsOpen(false);
       setLoading(false);
       setName("");
       setInventoryNumber("");
-      setQuantity("");
       setMeasure("");
       setType("");
       setTag("");
