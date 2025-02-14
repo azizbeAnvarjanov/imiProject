@@ -25,7 +25,7 @@ import { Label } from "./ui/label";
 import useCollection from "./useCollection";
 import toast from "react-hot-toast";
 import { CircleFadingPlus } from "lucide-react";
-import TagsSelect from "@/components/TagsSelect";
+import TagsSelect from "../components/comp-229";
 
 const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
   const [loading, setLoading] = useState(false);
@@ -41,6 +41,8 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
   const [unitPrice, setUnitPrice] = useState("");
   const [deliverer, setDeliverer] = useState("");
   const [receiver, setReceiver] = useState("");
+
+
 
   const [suggestion, setSuggestion] = useState("");
   const [equipmentNames, setEquipmentNames] = useState([]);
@@ -235,7 +237,7 @@ const AddEquipmentDialog = ({ branchId, roomId, roomName, branchName }) => {
               </Select>
             </div>
             <div>
-              <TagsSelect setTag={setTag} tag={tag} tags={tags} />
+              <TagsSelect setTag={setTag} />
             </div>
             <div>
               <Label className="my-2 flex">Topshiruvchi:</Label>

@@ -241,6 +241,7 @@ const AllEquipments = () => {
                 <SelectItem value="300">300</SelectItem>
                 <SelectItem value="400">400</SelectItem>
                 <SelectItem value="500">500</SelectItem>
+                <SelectItem value="2000">2000</SelectItem>
               </SelectContent>
             </Select>
 

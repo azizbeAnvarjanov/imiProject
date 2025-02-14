@@ -16,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import IssuedEqipments from "@/components/IssuedEquipemnts";
 import EditEquipmentDialog from "@/components/EditEquipmentDialog";
 import ChangeLocationDialog from "@/components/ChangeLocationDialog";
 import TableTotalPrice from "@/components/TableTotalPrice";
@@ -63,6 +64,7 @@ const BranchRoomsID = ({ roomId, branchId }) => {
     return () => unsubscribe(); // Cleanup on unmount
   }, [roomId, db]);
 
+  console.log(equipments);
   // Filtrlash funksiyasi
   const filteredData = equipments.filter((item) =>
     ["name", "branchName", "status"].some((key) =>
@@ -265,6 +267,9 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                         id={user.id}
                         name={user.name}
                         path="equipments"
+                      />
+                      <IssuedEqipments
+                        item={user}
                       />
                     </TableCell>
                   </TableRow>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
-import TagsSelect from "@/components/TagsSelect";
+import TagsSelect from "@/components/comp-229";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
@@ -191,7 +191,7 @@ const EditEquipmentDialog = ({ equipmentId }) => {
             </Select>
           </div>
           <div>
-            <TagsSelect tags={tags} setTag={setChangedTag} />
+            <TagsSelect setTag={setChangedTag} />
           </div>
           <div>
             <Label className="my-2 flex">Topshiruvchi:</Label>
