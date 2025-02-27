@@ -36,6 +36,13 @@ const SidebarLinks = ({ user }) => {
               <h1 className="font-medium">AXO Dashboard</h1>
             </Link>
             <Link
+              href="/inv-eq"
+              className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+            >
+              <Settings size="22px" />
+              <h1 className="font-medium">Invertar johozlar</h1>
+            </Link>
+            <Link
               href="/branches"
               className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
             >
@@ -125,6 +132,12 @@ const SidebarLinks = ({ user }) => {
             >
               <Settings size="22px" />
               <h1 className="font-medium">AXO Dashboard</h1>
+            </Link>
+            <Link
+              href="/inv-eq"
+              className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
+            >
+              <h1 className="font-medium">Invertar johozlar</h1>
             </Link>
             <Link
               href="/branches"
