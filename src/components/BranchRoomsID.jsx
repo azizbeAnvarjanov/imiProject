@@ -39,44 +39,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import useRoomEquipments from "@/components/useRoomEquipments";
 const BranchRoomsID = ({ roomId, branchId }) => {
   const [equipments, setEquipments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState("20"); // Default number of items per page
   const db = getFirestore(); // Initialize Firestore
   const [searchTerm, setSearchTerm] = useState("");
-  useEffect(() => {
-    const q = query(
-      collection(db, "equipments"),
-      where("location", "==", roomId),
-      orderBy("createdAt", "desc") // Yangi qo'shilganlarni tepaga chiqarish
-    );
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const roomsData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setEquipments(roomsData);
-    });
+  const equipmentss = useRoomEquipments(roomId);
 
-    return () => unsubscribe(); // Cleanup on unmount
-  }, [roomId, db]);
-
-  console.log(equipments);
+  console.log(equipmentss);
+  if (!equipmentss) {
+    return <>loading...</>
+  }
   // Filtrlash funksiyasi
-  const filteredData = equipments.filter((item) =>
+  const filteredData = equipmentss?.filter((item) =>
     ["name", "branchName", "status"].some((key) =>
       item[key]?.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
   // Pagination uchun hisoblash
-  const totalItems = filteredData.length;
+  const totalItems = filteredData?.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
+  const currentData = filteredData?.slice(startIndex, startIndex + itemsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -110,7 +98,7 @@ const BranchRoomsID = ({ roomId, branchId }) => {
         />
       </div>
       <TableTotalPrice data={filteredData} />
-      {currentData.length === 0 ? (
+      {currentData?.length === 0 ? (
         <>no equipments</>
       ) : (
         <div className="mt-3">
@@ -207,7 +195,7 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {currentData.map((user, index) => (
+                {currentData?.map((user, index) => (
                   <TableRow key={user.id}>
                     <TableCell className="border p-2 text-center">
                       {startIndex + index + 1}
@@ -268,9 +256,7 @@ const BranchRoomsID = ({ roomId, branchId }) => {
                         name={user.name}
                         path="equipments"
                       />
-                      <IssuedEqipments
-                        item={user}
-                      />
+                      <IssuedEqipments item={user} />
                     </TableCell>
                   </TableRow>
                 ))}

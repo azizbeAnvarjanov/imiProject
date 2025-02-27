@@ -78,7 +78,7 @@ const SidebarLinks = ({ user }) => {
         {userDepartment === "Marketing" && userRole === "Admin" ? (
           <>
             <Link
-              href="/marketing-dashboard"
+              href="/"
               className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
             >
               <LayoutList size="22px" />
@@ -165,7 +165,7 @@ const SidebarLinks = ({ user }) => {
             <hr />
             <br />
             <Link
-              href="/marketing-dashboard"
+              href="/"
               className="flex items-center justify-start gap-3 p-3 rounded-md hover:bg-muted"
             >
               <LayoutList size="22px" />

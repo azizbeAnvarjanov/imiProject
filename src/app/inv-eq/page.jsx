@@ -29,15 +29,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { toast } from "react-hot-toast";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
-import InvertoryEquipmentsFunction from "./InvertoryEquipmentsFunction";
 const AllEquipments = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [inputInverterNumber, setInputInverterNumber] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // Pagination uchun sahifa
   const [rowsPerPage, setRowsPerPage] = useState("20"); // Har bir sahifadagi qatorlar soni (default: 20)
-  const [loading, setLoading] = useState(false); // Har bir sahifadagi qatorlar soni (default: 20)
 
-  const equipments = useCollection("equipments");
+  const equipments = useCollection("inventoryItems");
 
   // Filtrlash funksiyasi
   const filteredData = equipments.filter((item) =>
@@ -62,6 +65,15 @@ const AllEquipments = () => {
   };
 
   console.log(filteredData);
+  const handleInventoryNumberChange = async (id, newNumber) => {
+    try {
+      const itemRef = doc(db, "inventoryItems", id);
+      await updateDoc(itemRef, { inventoryNumber: newNumber });
+      toast.success("Jihoz yangilandi");
+    } catch (error) {
+      console.error("Xatolik yuz berdi: ", error);
+    }
+  };
 
   return (
     <div className="p-5 overflow-x-auto">
@@ -91,9 +103,7 @@ const AllEquipments = () => {
                 <TableCell className="bg-gray-500 text-white font-bold">
                   №
                 </TableCell>
-                <TableCell className="bg-gray-500 text-white font-bold">
-                  C
-                </TableCell>
+
                 <TableCell className="bg-gray-500 text-white font-bold">
                   Filial
                 </TableCell>
@@ -109,9 +119,7 @@ const AllEquipments = () => {
                 <TableCell className="bg-gray-500 text-white font-bold">
                   Turi
                 </TableCell>
-                <TableCell className="bg-gray-500 text-white font-bold">
-                  Soni
-                </TableCell>
+
                 <TableCell className="bg-gray-500 text-white font-bold">
                   Dona narxi
                 </TableCell>
@@ -136,9 +144,6 @@ const AllEquipments = () => {
                 <TableCell className="bg-gray-500 text-white font-bold">
                   Qabul qildi
                 </TableCell>
-                <TableCell className="bg-gray-500 text-white font-bold">
-                  Amallar
-                </TableCell>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -147,39 +152,7 @@ const AllEquipments = () => {
                   <TableCell className="border p-2 text-center">
                     {index + 1 + (currentPage - 1) * rowsPerPage}
                   </TableCell>
-                  <TableCell className="border">
-                    {/* {user.qrCode ? (
-                      <>
-                        <ViewQrCode url={user.qrCode} />
-                      </>
-                    ) : (
-                      <>-</>
-                    )} */}
-                    <Button
-                      onClick={() =>
-                        InvertoryEquipmentsFunction(user, setLoading)
-                      }
-                    >
-                      {loading ? (
-                        <div className="loader">
-                          <div className="bar1"></div>
-                          <div className="bar2"></div>
-                          <div className="bar3"></div>
-                          <div className="bar4"></div>
-                          <div className="bar5"></div>
-                          <div className="bar6"></div>
-                          <div className="bar7"></div>
-                          <div className="bar8"></div>
-                          <div className="bar9"></div>
-                          <div className="bar10"></div>
-                          <div className="bar11"></div>
-                          <div className="bar12"></div>
-                        </div>
-                      ) : (
-                        <>Add</>
-                      )}
-                    </Button>
-                  </TableCell>
+
                   <TableCell className="border p-2 hover:underline hover:text-blue-600">
                     <Link href={`/branches/${user.branchId}`} target="_blank">
                       {user.branchName || "Ma'lumot yo'q"}
@@ -201,13 +174,16 @@ const AllEquipments = () => {
                     </Link>
                   </TableCell>
                   <TableCell className="border p-2">
-                    {user.inventoryNumber || "Ma'lumot yo'q"}
+                    <Input
+                      type="text"
+                      value={user.inventoryNumber}
+                      onChange={(e) =>
+                        handleInventoryNumberChange(user.id, e.target.value)
+                      }
+                    />
                   </TableCell>
                   <TableCell className="border p-2">
                     {user.type || "Ma'lumot yo'q"}
-                  </TableCell>
-                  <TableCell className="border p-2">
-                    {user.quantity || "Ma'lumot yo'q"}
                   </TableCell>
                   <TableCell className="border p-2">
                     {user.unitPrice?.toLocaleString() || "Ma'lumot yo'q"}
@@ -233,15 +209,6 @@ const AllEquipments = () => {
                   </TableCell>
                   <TableCell className="border p-2">
                     {user.receiver || "Ma'lumot yo'q"}
-                  </TableCell>
-                  <TableCell className="border text-center flex items-center justify-center border-none">
-                    <Link
-                      target="_blank"
-                      href={`/equipment/${user.id}`}
-                      className="text-blue-500 underline hover:text-blue-700 ml-2"
-                    >
-                      <SquareArrowOutUpRight size="18px" />
-                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
